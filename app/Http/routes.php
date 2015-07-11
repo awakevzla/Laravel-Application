@@ -20,23 +20,27 @@ Route::group(['domain' => '{farm}.' . $_ENV['ROOT_DOMAIN']], function (){
     });
 
     Route::get('/', function ($farm){
-        return view('layouts.farm-site')->with('farm', $farm);
+        return view('public-site')->with('farm', $farm);
     });
 
     Route::get('admin', function ($farm){
-        return view('layouts.admin-site')->with('farm', $farm);
+        return view('admin-site')->with('farm', $farm);
     });
 
     Route::group(['prefix' => 'admin'], function (){
         Route::get('shares', function ($farm){
-            return view('layouts.admin-site.shares')->with('farm', $farm);
+            return view('admin-site.shares')->with('farm', $farm);
         });
     });
 });
 
 Route::get('/', function (){
-    return view('layouts.admin-site');
+    return view('this-site.register');
 });
 
-Route::get('register', array('uses' => 'Controller@showRegistrationForm'));
-Route::post('register', array('uses' => 'Controller@showLogin'));
+Route::get('/register', function (){
+    return view('this-site.register');
+});
+
+//Route::get('register', array('uses' => 'Controller@showRegistrationForm'));
+//Route::post('register', array('uses' => 'Controller@showLogin'));

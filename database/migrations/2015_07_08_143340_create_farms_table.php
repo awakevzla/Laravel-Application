@@ -33,7 +33,6 @@ class CreateFarmsTable extends Migration
             $table->integer('address_id')->unsigned();
             $table->string('phone', 50)->nullable();
             $table->string('email', 50)->unique();
-            $table->string('password', 150);
             $table->softDeletes();
             $table->timestamps();
 

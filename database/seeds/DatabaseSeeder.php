@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use App\Address;
+use App\Farm\Address;
 use App\Farm;
 
 class DatabaseSeeder extends Seeder
@@ -28,9 +28,11 @@ class DatabaseSeeder extends Seeder
                            'subdomain'  => 'farm',
                            'address_id' => 1,
                            'phone'      => '680-6009',
-                           'email'      => 'raywinkelman@gmail.com',
-                           'password'   => Hash::make('csa')));
+                           'email'      => 'raywinkelman@gmail.com'
+                     ));
 
         Model::reguard();
     }
 }
+
+//'password'   => Hash::make('csa')

@@ -22,74 +22,107 @@ var BaseFormValidation = function() {
                 jQuery(e).closest('.help-block').remove();
             },
             rules: {
-                'val-username': {
+                'farm-name': {
                     required: true,
                     minlength: 3
                 },
-                'val-email': {
+                'farm-subdomain': {
+                    required: true,
+                    minlength: 3
+                },
+                'farm-phone': {
+                    required: true,
+                    minlength: 9
+                },
+                'farm-email': {
                     required: true,
                     email: true
                 },
-                'val-password': {
+                'address-country': {
                     required: true,
-                    minlength: 5
+                    minlength: 5,
+                    regex: "^[a-zA-Z]{1,40}$"
                 },
-                'val-confirm-password': {
+                'address-state': {
                     required: true,
-                    equalTo: '#val-password'
+                    minlength: 3
                 },
-                'val-suggestions': {
+                'address-city': {
                     required: true,
-                    minlength: 5
+                    minlength: 3
                 },
-                'val-skill': {
-                    required: true
-                },
-                'val-website': {
+                'address-postal': {
                     required: true,
-                    url: true
+                    postalcode: true
                 },
-                'val-digits': {
+                'address-street-number': {
                     required: true,
-                    digits: true
-                },
-                'val-number': {
-                    required: true,
+                    minlength: 1,
                     number: true
                 },
-                'val-range': {
+                'address-street-name': {
                     required: true,
                     range: [1, 5]
                 },
-                'val-terms': {
-                    required: true
+                'user-first-name': {
+                    required: true,
+                    minlength: 3
+                },
+                'user-last-name': {
+                    required: true,
+                    minlength: 3
+                },
+                'user-username': {
+                    required: true,
+                    minlength: 3
+                },
+                'user-email': {
+                    required: true,
+                    email: true
+                },
+                'user-password': {
+                    required: true,
+                    minlength: 3
+                },
+                'user-confirm-password': {
+                    required: true,
+                    minlength: 3,
+                    equalTo: true
                 }
+
             },
             messages: {
-                'val-username': {
+                'vuser-username': {
                     required: 'Please enter a username',
                     minlength: 'Your username must consist of at least 3 characters'
                 },
-                'val-email': 'Please enter a valid email address',
-                'val-password': {
+                'user-email': 'Please enter a valid email address',
+                'user-password': {
                     required: 'Please provide a password',
                     minlength: 'Your password must be at least 5 characters long'
                 },
-                'val-confirm-password': {
+                'user-confirm-password': {
                     required: 'Please provide a password',
                     minlength: 'Your password must be at least 5 characters long',
                     equalTo: 'Please enter the same password as above'
                 },
-                'val-suggestions': 'What can we do to become better?',
-                'val-skill': 'Please select a skill!',
-                'val-website': 'Please enter your website!',
-                'val-digits': 'Please enter only digits!',
-                'val-number': 'Please enter a number!',
-                'val-range': 'Please enter a number between 1 and 5!',
-                'val-terms': 'You must agree to the service terms!'
+                'val-terms2': 'You must agree to the service terms!'
             }
         });
     };
+
+    $.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        },
+        "Please check your input."
+    );
+
+    $.validator.addMethod('postalcode', function (value) {
+        return /^((\d{5}-\d{4})|(\d{5})|([A-Z]\d[A-Z]\s\d[A-Z]\d))$/.test(value);
+    }, 'Please enter a valid US or Canadian postal code.');
 
     // Init Material Forms Validation, for more examples you can check out https://github.com/jzaefferer/jquery-validation
     var initValidationMaterial = function(){
@@ -108,70 +141,89 @@ var BaseFormValidation = function() {
                 jQuery(e).closest('.help-block').remove();
             },
             rules: {
-                'val-username2': {
+                'farm[name]': {
                     required: true,
                     minlength: 3
                 },
-                'val-email2': {
+                'farm-subdomain': {
+                    required: true,
+                    minlength: 3
+                },
+                'farm-phone': {
+                    required: true,
+                    minlength: 9
+                },
+                'farm-email': {
                     required: true,
                     email: true
                 },
-                'val-password2': {
+                'address-country': {
                     required: true,
-                    minlength: 5
+                    minlength: 5,
+                    //regex: "^[a-zA-Z]{1,40}$"
                 },
-                'val-confirm-password2': {
+                'address-state': {
                     required: true,
-                    equalTo: '#val-password2'
+                    minlength: 3
                 },
-                'val-suggestions2': {
+                'address-city': {
                     required: true,
-                    minlength: 5
+                    minlength: 3
                 },
-                'val-skill2': {
-                    required: true
-                },
-                'val-website2': {
+                'address-postal': {
                     required: true,
-                    url: true
+                    //postalcode: true
                 },
-                'val-digits2': {
+                'address-street-number': {
                     required: true,
-                    digits: true
-                },
-                'val-number2': {
-                    required: true,
+                    minlength: 1,
                     number: true
                 },
-                'val-range2': {
+                'address-street-name': {
                     required: true,
-                    range: [1, 5]
+                    minlength: 3
                 },
-                'val-terms2': {
-                    required: true
+                'user-first-name': {
+                    required: true,
+                    minlength: 3
+                },
+                'user-last-name': {
+                    required: true,
+                    minlength: 3
+                },
+                'user-username': {
+                    required: true,
+                    minlength: 3
+                },
+                'user-email': {
+                    required: true,
+                    email: true
+                },
+                'user-password': {
+                    required: true,
+                    minlength: 3
+                },
+                'user-confirm-password': {
+                    required: true,
+                    minlength: 3,
+                    equalTo: true
                 }
             },
             messages: {
-                'val-username2': {
+                'user-username': {
                     required: 'Please enter a username',
                     minlength: 'Your username must consist of at least 3 characters'
                 },
-                'val-email2': 'Please enter a valid email address',
-                'val-password2': {
+                'user-email': 'Please enter a valid email address',
+                'user-password': {
                     required: 'Please provide a password',
                     minlength: 'Your password must be at least 5 characters long'
                 },
-                'val-confirm-password2': {
+                'user-confirm-password': {
                     required: 'Please provide a password',
                     minlength: 'Your password must be at least 5 characters long',
                     equalTo: 'Please enter the same password as above'
                 },
-                'val-suggestions2': 'What can we do to become better?',
-                'val-skill2': 'Please select a skill!',
-                'val-website2': 'Please enter your website!',
-                'val-digits2': 'Please enter only digits!',
-                'val-number2': 'Please enter a number!',
-                'val-range2': 'Please enter a number between 1 and 5!',
                 'val-terms2': 'You must agree to the service terms!'
             }
         });
@@ -180,7 +232,7 @@ var BaseFormValidation = function() {
     return {
         init: function () {
             // Init Bootstrap Forms Validation
-            initValidationBootstrap();
+            //initValidationBootstrap();
 
             // Init Meterial Forms Validation
             initValidationMaterial();

@@ -38,9 +38,13 @@ Route::get('/', function (){
     return view('this-site.register');
 });
 
+Route::group(['namespace' => 'Farm'], function() {
+    Route::post('/register', array('uses' => 'FarmController@registerFarm'));
+});
+
+// Will be in the Farm namespace when calls are made to check for available subdomains
 Route::get('/register', function (){
     return view('this-site.register');
 });
 
-//Route::get('register', array('uses' => 'Controller@showRegistrationForm'));
-//Route::post('register', array('uses' => 'Controller@showLogin'));
+

@@ -143,9 +143,10 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\TranslateProvider::class,
 
-        Collective\Html\HtmlServiceProvider::class
+        Collective\Html\HtmlServiceProvider::class,
+        App\Translate\TranslateProvider::class,
+        App\Ip2Country\Ip2CountryServiceProvider::class
 
     ],
 

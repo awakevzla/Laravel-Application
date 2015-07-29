@@ -3,19 +3,19 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFarmsTable extends Migration
+class CreateDatabase extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up(){
-        Schema::dropIfExists('FarmAdmins');
-        Schema::dropIfExists('Farms');
-        Schema::dropIfExists('Addresses');
+    public function up()
+    {
+        Schema::dropIfExists('Business');
+        Schema::dropIfExists('Address');
 
-        Schema::create('Addresses', function (Blueprint $table){
+        Schema::create('Address', function (Blueprint $table){
             $table->increments('id');
             $table->string('country', 50);
             $table->string('state', 50);
@@ -26,7 +26,7 @@ class CreateFarmsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('Farms', function (Blueprint $table){
+        Schema::create('Business', function (Blueprint $table){
             $table->increments('id');
             $table->string('name', 50);
             $table->string('subdomain', 50)->unique();
@@ -36,9 +36,8 @@ class CreateFarmsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('address_id')->references('id')->on('Addresses');
+            $table->foreign('address_id')->references('id')->on('Address');
         });
-
     }
 
     /**
@@ -46,7 +45,8 @@ class CreateFarmsTable extends Migration
      *
      * @return void
      */
-    public function down(){
+    public function down()
+    {
         //
     }
 }

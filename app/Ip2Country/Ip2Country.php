@@ -12,7 +12,7 @@ class Ip2Country {
      */
     public static function get($ipAddress = null, $response = 'country_code')
     {
-        $ipAddress = $ipAddress ?: $_SERVER['REMOTE_ADDR'];
+        $ipAddress = '24.138.70.193'; //$ipAddress ?: $_SERVER['REMOTE_ADDR'];
 
         $user_ip = ip2long($ipAddress);
 
@@ -35,8 +35,6 @@ class Ip2Country {
         );
 
         return count($results) ?  $results->{$response} : $defaults;
-
-        return ;
     }
 
     /**

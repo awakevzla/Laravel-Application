@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use App\Farm\Address;
-use App\Farm;
+use App\Business\Address;
+use App\Business;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(){
         Model::unguard();
-        DB::table('Farms')->delete();
-        DB::table('Addresses')->delete();
+        DB::table('Business')->delete();
+        DB::table('Address')->delete();
 
         Address::create(array('country'       => 'Canada',
                               'state'         => 'Nova Scotia',
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
                               'street_name'   => 'Normandy',
                               'postal'        => 'B0P1J0'));
 
-        Farm::create(array('name'       => 'Ray\'s Farm',
+        Business::create(array('name'       => 'Ray\'s Business',
                            'subdomain'  => 'farm',
                            'address_id' => 1,
                            'phone'      => '680-6009',

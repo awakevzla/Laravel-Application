@@ -10,13 +10,13 @@ class Translate
     public function __construct(){
 
         $this->country = Ip2Country::get();
-        $this->locale = $this->countryCodeToLocale($this->country['default_country_code']);
+        $this->locale = 'en_CA'; //$this->countryCodeToLocale($this->country['default_country_code']);
 
         $this->tr = new TranslateClient(null, $this->locale, [
             'defaults' => [
                 'timeout' => 10,
                 'headers' => [
-                    'User-Agent' => 'CSA/1.0'
+                    'User-Agent' => $_ENV['NAME'].'/'.$_ENV['VERSION']
                 ]
             ]
         ]);

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Farm;
+namespace App\Business;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Address extends Model
+class Share extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'Addresses';
+    protected $table = 'Shares';
     /**
      * The attributes that are mass assignable.
      *
@@ -24,5 +24,4 @@ class Address extends Model
      * @var array
      */
     protected $hidden = [];
-
 }

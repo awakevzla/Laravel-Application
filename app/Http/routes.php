@@ -11,25 +11,25 @@
 |
 */
 
-use App\Farm;
+use App\Business;
 
-Route::group(['domain' => '{farm}.' . $_ENV['ROOT_DOMAIN']], function (){
+Route::group(['domain' => '{business}.' . $_ENV['ROOT_DOMAIN']], function (){
 
-    Route::bind('farm', function ($subdomain){
+    Route::bind('business', function ($subdomain){
         return Farm::where('subdomain', $subdomain)->first();
     });
 
-    Route::get('/', function ($farm){
-        return view('public-site')->with('farm', $farm);
+    Route::get('/', function ($business){
+        return view('public-site')->with('business', $business);
     });
 
-    Route::get('admin', function ($farm){
-        return view('admin-site')->with('farm', $farm);
+    Route::get('admin', function ($business){
+        return view('admin-site')->with('business', $business);
     });
 
     Route::group(['prefix' => 'admin'], function (){
-        Route::get('shares', function ($farm){
-            return view('admin-site.shares')->with('farm', $farm);
+        Route::get('shares', function ($business){
+            return view('admin-site.shares')->with('business', $business);
         });
     });
 });
@@ -38,8 +38,8 @@ Route::get('/', function (){
     return view('this-site.register');
 });
 
-Route::group(['namespace' => 'Farm'], function() {
-    Route::post('/register', array('uses' => 'FarmController@registerFarm'));
+Route::group(['namespace' => 'Business'], function() {
+    Route::post('/register', array('uses' => 'BusinessController@registerBusiness'));
 });
 
 // Will be in the Farm namespace when calls are made to check for available subdomains

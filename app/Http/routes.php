@@ -16,11 +16,11 @@ use App\Business;
 Route::group(['domain' => '{business}.' . $_ENV['ROOT_DOMAIN']], function (){
 
     Route::bind('business', function ($subdomain){
-        return Farm::where('subdomain', $subdomain)->first();
+        return Business::where('subdomain', $subdomain)->first();
     });
 
     Route::get('/', function ($business){
-        return view('public-site')->with('business', $business);
+        return view('business-site.'.$business->theme)->with('business', $business);
     });
 
     Route::get('admin', function ($business){
@@ -35,7 +35,7 @@ Route::group(['domain' => '{business}.' . $_ENV['ROOT_DOMAIN']], function (){
 });
 
 Route::get('/', function (){
-    return view('this-site.register');
+    return view('public-site.register');
 });
 
 Route::group(['namespace' => 'Business'], function() {
@@ -44,7 +44,7 @@ Route::group(['namespace' => 'Business'], function() {
 
 // Will be in the Farm namespace when calls are made to check for available subdomains
 Route::get('/register', function (){
-    return view('this-site.register');
+    return view('public-site.register');
 });
 
 

@@ -33,6 +33,7 @@ class CreateDatabase extends Migration
             $table->integer('address_id')->unsigned();
             $table->string('phone', 50)->nullable();
             $table->string('email', 50)->unique();
+            $table->tinyInteger('theme')->default(1);
             $table->softDeletes();
             $table->timestamps();
 

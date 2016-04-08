@@ -1,0 +1,5 @@
+1. Install MariaDB
+2. Install MySQL Workbench
+3. Install Apache
+4. Install PHP
+5. Install Composer

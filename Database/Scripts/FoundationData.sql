@@ -1,0 +1,1 @@
+INSERT INTO Farms (`name`, addressid) VALUES ('Rays Farm', 4);

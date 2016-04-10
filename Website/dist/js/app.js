@@ -137,7 +137,7 @@ $.AdminLTE.options = {
  * functions and plugins as specified by the
  * options above.
  */
-$(function () {
+function Functions() {
   "use strict";
 
   //Fix for IE page transitions
@@ -219,7 +219,7 @@ $(function () {
     });
 
   });
-});
+}
 
 /* ----------------------------------
  * - Initialize the AdminLTE Object -
@@ -603,7 +603,7 @@ function _init() {
  * @type plugin
  * @usage $("#box-widget").boxRefresh( options );
  */
-(function ($) {
+function CustomPlugs() {
 
   "use strict";
 
@@ -670,7 +670,7 @@ function _init() {
 
   };
 
-})(jQuery);
+}
 
 /*
  * EXPLICIT BOX ACTIVATION
@@ -681,7 +681,7 @@ function _init() {
  * @type plugin
  * @usage $("#box-widget").activateBox();
  */
-(function ($) {
+function CustomBox() {
 
   'use strict';
 
@@ -689,7 +689,7 @@ function _init() {
     $.AdminLTE.boxWidget.activate(this);
   };
 
-})(jQuery);
+}
 
 /*
  * TODO LIST CUSTOM PLUGIN
@@ -699,7 +699,7 @@ function _init() {
  * @type plugin
  * @usage $("#todo-widget").todolist( options );
  */
-(function ($) {
+function CustomList() {
 
   'use strict';
 
@@ -743,4 +743,4 @@ function _init() {
       }
     });
   };
-}(jQuery));
+}

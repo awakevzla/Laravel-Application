@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use DB;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
+use Validator;
 
-class UserCredentialsController extends BaseController {
+class UserCredentialsController extends Controller {
 
     public function getWhereEmail(Request $request) {
 

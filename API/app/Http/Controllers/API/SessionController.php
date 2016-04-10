@@ -3,14 +3,21 @@
 namespace App\Http\Controllers\API;
 
 use DB;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
+use Validator;
 
-class SessionController extends BaseController {
+class SessionController extends Controller {
 
-  public function getUserTypeWhereToken($token) {
+  public function getUserWhereToken($token) {
 
-    $result = DB::select('call Sessions_GetUserTypeWhereToken(?)', array($token));
+    $validator = Validator::make(array('token' => $token), [
+      'token' => 'required|size:32'
+    ]);
+
+    if ($validator->fails()) {
+      return $validator->errors()->all();
+    }
+
+    $result = DB::select('call Sessions_GetUserWhereToken(?)', array($token));
 
     return json_encode($result);
   }

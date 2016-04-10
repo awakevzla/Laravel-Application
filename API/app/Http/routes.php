@@ -18,14 +18,12 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api'], function () {
 
   Route::group(['prefix' => 'farm'], function () {
-    Route::get('{farmid}', 'API\FarmController@getWhereId')->where('farmid', '[0-9]+');
+    Route::get('/id/{farmid}', 'API\FarmController@getWhereId')->where('farmid', '[0-9]+');
   });
 
   Route::group(['prefix' => 'user'], function () {
-    Route::get('{id}', 'API\UserCredentialsController@getWhereId')->where('id', '[0-9]+');
-
-    //Route::post('{email}', 'API\UserCredentialsController@getWhereEmail');
-    Route::get('/type/{token}', 'API\SessionController@getUserTypeWhereToken');
+    Route::get('/id/{id}', 'API\UserCredentialsController@getWhereId')->where('id', '[0-9]+');
+    Route::get('/type/{token}', 'API\SessionController@getUserWhereToken');
   });
 
 });

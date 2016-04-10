@@ -22,8 +22,10 @@ Route::group(['prefix' => 'api'], function () {
   });
 
   Route::group(['prefix' => 'user'], function () {
-    Route::post('{email}', 'API\UserCredentialsController@getWhereEmail');
     Route::get('{id}', 'API\UserCredentialsController@getWhereId')->where('id', '[0-9]+');
+
+    //Route::post('{email}', 'API\UserCredentialsController@getWhereEmail');
+    Route::get('/type/{token}', 'API\SessionController@getUserTypeWhereToken');
   });
 
 });

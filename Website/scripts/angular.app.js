@@ -1,5 +1,5 @@
-var user = { email:"", password:"", token:"" };
-var domain = "hhapi.com";
+var $user = { email:"", password:"", token:"0b9da19efefb11e5b4cdfcaa14e66c2b" };
+var $domain = "hhapi.com";
 
 angular
 .module('app', [
@@ -32,41 +32,33 @@ angular
     }]
   })
   // Misc
-  .state('about', {
-    url: '/about',
-    templateUrl: 'index2.html',
-    data: {
-      requireLogin: false
-    },
+  .state('login', {
+    url: '/login',
+    templateUrl: 'html/login.html',
     controller: ['$scope', function($scope){
-      $scope.title = 'About';
+      $scope.title = 'Login';
     }]
   })
-  .state('starter', {
-    url: '/starter',
-    templateUrl: 'starter.html'
-  })
 }])
-.controller('AuthController', function ($scope, $http) {
-    if (1 == 2) { //Login($usertype, $http)
+.controller('AuthController', function ($scope, $http, $state) {
+  $http({
+    url: "http://" + $domain + "/api/user/type/" + $user['token'],
+    method: "GET"
+  }).success(function(data) {
+    $scope.data = data;
 
-        $http({
-          url: "http://" + domain + "/user/loggedin",
-          method: "POST",
-          data: {user.email:sha256_digest(user.password):user.token}
-        }).success(function(data, status, headers, config) {
-          $scope.data = data;
-          // We're logged in.
-
-
-        }).error(function(data, status, headers, config) {
-          // No dice
-          $scope.status = status;
-          return false;
-        });
-        window.location.href = '/';
-
-
+    if  ((data[0] != null) && (data[0] != undefined) && ('usertype' in data[0]) ) {
+      if(($state.current.name.indexOf('farm') > -1) && data[0]['usertype'] === 'Farmer'){
+        return;
+      }
+      else if (($state.current.name.indexOf('customer') > -1) && data[0]['usertype'] === 'Customer'){
+        return;
+      }
     }
+    window.location.href = '/#/login';
+
+  }).error(function(status) {
+    window.location.href = '/#/login';
+  });
 });
 //5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8

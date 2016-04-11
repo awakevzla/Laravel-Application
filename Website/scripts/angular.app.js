@@ -24,11 +24,13 @@ angular
   })
   .state('farm.admin', {
     url: '/admin',
-    title: 'Admin Panel',
-    templateUrl: 'html/admin.farm.html',
-    controller: function($scope) {
-      DashLoad();
-    }
+    templateUrl: 'html/farm.admin.html'
+  })
+  .state('farm.admin.dashboard', {
+    url: '/dashboard',
+    title: 'Dashboard',
+    subheading: 'Tweak it up!',
+    templateUrl: 'html/farm.admin.dashboard.html'
   })
   // Misc
   .state('login', {
@@ -61,7 +63,13 @@ angular
 // Listeners
 .run(['$rootScope', function($rootScope) {
   $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){
-    setTitle(toState['title']);
+    $rootScope.heading = toState['title'];
+    $rootScope.subheading = toState['subheading']
+  })
+}])
+.run(['$rootScope', function($rootScope) {
+  $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
+    setDOM(toState);
   })
 }]);
 
@@ -70,8 +78,9 @@ function isObject(val) {
   return val instanceof Object;
 }
 
-function setTitle(val){
-  $('title').html('HarvestHand | ' + val);
+function setDOM(toState){
+  $('title').html('HarvestHand | ' + toState['title']);
+  $.getScript('js/' + toState['name'] + '.js');
 }
 //5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
 

@@ -29,7 +29,14 @@ var rootScopeMechanism = {
     $('title').html('HarvestHand | ' + value);
   },
   SetStateScript: function(scriptName) {
-    $.getScript('js/' + scriptName + '.js');
-  }
 
+    jQuery.ajax({
+          url: 'js/' + scriptName + '.js',
+          dataType: 'script',
+          cache: true
+    }).done(function() {
+
+    });
+  }
+  
 };

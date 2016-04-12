@@ -40,18 +40,12 @@ angular.module('app')
 // A function to validate that the user type was returned, and is the expected type.
 function ValidateUserType(stateName, requiredState, expectedType, serverResponse){
 
-  try {
-    var response = helper.getFirstElement(serverResponse);
+  var response = helper.getFirstElement(serverResponse);
 
-    if (helper.isObject(response) && 'usertype' in response) {
-      if((stateName.indexOf(requiredState) > -1) && response['usertype'] === expectedType){
-        return true;
-      }
+  if (helper.isObject(response) && 'usertype' in response) {
+    if((stateName.indexOf(requiredState) > -1) && response['usertype'] === expectedType){
+      return true;
     }
   }
-  catch(err) {
-    return false;
-  }
-
   return false;
 }

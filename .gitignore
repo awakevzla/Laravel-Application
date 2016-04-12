@@ -5,3 +5,5 @@ Homestead.yaml
 /nbproject/private/
 /HarvestHand/nbproject/private/
 /Website/nbproject/private/
+apache_common_log
+apache_error_log

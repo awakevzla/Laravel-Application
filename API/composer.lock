@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4d2fba166c779c3ecf3e80d7f37c0d77",
-    "content-hash": "18ddfc3353e55b304db94f50aa05f020",
+    "hash": "f1797adf0c1f997d847997c1268d3861",
+    "content-hash": "3cb42debe716eac9b024f6489896fa2f",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -1881,6 +1881,90 @@
                 "fixtures"
             ],
             "time": "2016-04-29 12:21:54"
+        },
+        {
+            "name": "google/apiclient",
+            "version": "1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/google/google-api-php-client.git",
+                "reference": "a25dc9d5c109ebb02945ba1ff6336cc937c27628"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/google/google-api-php-client/zipball/a25dc9d5c109ebb02945ba1ff6336cc937c27628",
+                "reference": "a25dc9d5c109ebb02945ba1ff6336cc937c27628",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Client library for Google APIs",
+            "homepage": "http://developers.google.com/api-client-library/php",
+            "keywords": [
+                "google"
+            ],
+            "time": "2015-10-16 22:11:08"
+        },
+        {
+            "name": "google/appengine-php-sdk",
+            "version": "1.9.30",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/GoogleCloudPlatform/appengine-php-sdk.git",
+                "reference": "6bdf4bcb638782526a6969aa36528ac583cbc3da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/GoogleCloudPlatform/appengine-php-sdk/zipball/6bdf4bcb638782526a6969aa36528ac583cbc3da",
+                "reference": "6bdf4bcb638782526a6969aa36528ac583cbc3da",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "~1",
+                "phpunit/phpunit": "4.6.*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "google/appengine/runtime/autoloader.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Google App Engine PHP SDK",
+            "homepage": "https://cloud.google.com/appengine/docs/php/",
+            "keywords": [
+                "appengine",
+                "google",
+                "sdk"
+            ],
+            "time": "2015-12-08 07:29:30"
         },
         {
             "name": "hamcrest/hamcrest-php",

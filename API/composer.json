@@ -14,7 +14,9 @@
         "phpunit/phpunit": "~4.0",
         "symfony/css-selector": "2.8.*|3.0.*",
         "symfony/dom-crawler": "2.8.*|3.0.*",
-        "tomwalder/php-gds": "v2.1.0"
+        "tomwalder/php-gds": "v2.1.0",
+        "google/appengine-php-sdk": ">=1.9.22",
+        "google/apiclient": "1.1.6"
     },
     "autoload": {
         "classmap": [

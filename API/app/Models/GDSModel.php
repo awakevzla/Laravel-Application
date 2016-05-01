@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;;
 
 use \GDS\Entity;
 use \GDS\Store;
@@ -32,6 +32,16 @@ abstract class GDSModel
   public function getData()
   {
     return $this->data;
+  }
+
+  public function getClass()
+  {
+    return $this->class;
+  }
+
+  public function getBlueprint()
+  {
+    return $this->blueprint;
   }
 
   // Prepare this instance.
@@ -128,17 +138,17 @@ abstract class GDSModel
     }
     else
     {
-      $farms = array();
+      $entities = array();
 
       foreach ($this->store->fetchPage($count) as $entity)
       {
         $this->data = $entity->getData();
         $this->data['id'] = $entity->getKeyId();
 
-        array_push($farms, clone $this);
+        array_push($entities, clone $this);
       }
 
-      return $farms;
+      return $entities;
     }
   }
 
@@ -169,9 +179,9 @@ abstract class GDSModel
   }
 
   // Deleting
-  public function delete()
+  public function delete($id)
   {
-    $entity = $this->store->fetchById($this->data['id']);
+    $entity = $this->store->fetchById($id);
     $this->store->delete($entity);
   }
 

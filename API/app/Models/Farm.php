@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\GDSModel;
+use App\Models\GDSModel;
 
 class Farm extends GDSModel
 {
@@ -11,8 +11,8 @@ class Farm extends GDSModel
     parent::__construct();
 
     $blueprint = [
-      'name' => 'required|alpha|max:255',
-      'number' => 'required|numeric|between:1,1000',
+      'name' => 'required|alpha|max:85',
+      'subdomain' => 'required|alpha|max:45',
     ];
 
     $this->setBlueprint($blueprint);

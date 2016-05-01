@@ -15,19 +15,21 @@ Route::get('/', function () {
   return view('welcome');
 });
 
-//,'middleware' => ['api']
-Route::group(['prefix' => 'api'], function () {
+Route::group(['prefix' => 'api'], function ()
+{
+  // ------------ Farm Routes ------------
+  Route::group(['prefix' => '{entity}'], function ()
+  {
+    // Fetching
+    Route::get('{id}', 'EntityController@fetchById')->where('id', '[0-9]+');
+    Route::get('all', 'EntityController@fetchAll');
+    Route::get('template', 'EntityController@fetchTemplate');
 
-  Route::group(['prefix' => 'farm/'], function () {
-    Route::get('{id}/{client_token}', 'FarmController@getWhereId')->where('id', '[0-9]+');
-    Route::get('all/{client_token}', 'FarmController@getAll');
-    Route::post('upsert/', 'FarmController@upsert');
-  });
+    // Delete
+    Route::get('delete', 'EntityController@delete')->where('id', '[0-9]+');
 
-  Route::group(['prefix' => 'user'], function () {
-    Route::get('/id/{id}', 'API\UserCredentialsController@getWhereId')->where('id', '[0-9]+');
-
-    Route::post('/type', 'API\SessionController@getUserWhereToken');
+    // Upsert
+    Route::post('upsert', 'EntityController@upsert');
   });
 
 });

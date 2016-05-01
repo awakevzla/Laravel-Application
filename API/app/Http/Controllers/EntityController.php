@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Farm;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class EntityController extends Controller
+{
+  public function fetchById($entity, $id)
+  {
+    $class = $entity->getClass();
+    $entity = $entity->fetchById($id);
+
+    if($entity == null)
+    {
+      return json_encode("That " . $class . " record doesn't exist.");
+    }
+
+    return json_encode($entity->getData());
+  }
+
+  public function fetchAll($entity)
+  {
+    $entities = $entity->fetch(100);
+    $json = array();
+
+    foreach ($entities as $item)
+    {
+      array_push($json, json_encode($item->getData()));
+    }
+
+    return json_encode($json);
+  }
+
+  public function upsert($entity, Request $request)
+  {
+    $valid = $entity->validateRequest($request);
+
+    if($valid === true)
+    {
+      $entity->consume($request->all());
+      $entity->upsert();
+      return json_encode($entity->getData());
+    }
+    else
+    {
+      return json_encode($valid);
+    }
+  }
+
+  public function delete($entity, $id)
+  {
+    $entity->delete($id);
+  }
+
+  public function fetchTemplate($entity)
+  {
+    return json_encode($entity->getBlueprint());
+  }
+}

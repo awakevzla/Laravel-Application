@@ -15,17 +15,26 @@ abstract class GDSModel
   private $schema;
   private $store;
   private $entity;
+  private $class;
 
   private $data;
+
+  // Simple accessor
+  public function getData()
+  {
+    return $this->data;
+  }
 
   // Prepare this instance.
   function __construct()
   {
     $data = array();
 
+    $this->class = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
+
     $this->client = GoogleAPIClient::createClientFromJson('../gdskey.json');
     $this->gateway = new GoogleAPIClient($this->client, 'laravel-api');
-    $this->schema = new Schema(get_class($this));
+    $this->schema = new Schema($this->class);
     $this->store = new Store($this->schema, $this->gateway);
     $this->entity = new Entity();
     $this->entity->setSchema($this->schema);
@@ -64,7 +73,7 @@ abstract class GDSModel
     unset($this->data[$name]);
   }
 
-  /** Persistance **/
+  // Persistance
   public function upsert()
   {
     foreach ($this->data as $key => $value) {
@@ -92,12 +101,41 @@ abstract class GDSModel
 
     if(count($this->schema->getProperties(), COUNT_RECURSIVE) > 0)
     {
-      var_dump($this->data);
-      var_dump($this->schema->getProperties());
-      var_dump($this->entity);
-
       $this->store->upsert($this->entity);
     }
   }
 
+  // Fetching
+  public function fetch($count = 1)
+  {
+    if($count == 1)
+    {
+      $entity = $this->store->fetchOne();
+
+      $this->data = $entity->getData();
+      $this->data['id'] = $entity->getKeyId();
+
+      return $this;
+    }
+    else
+    {
+      $farms = array();
+
+      foreach ($this->store->fetchPage($count) as $entity)
+      {
+        $this->data = $entity->getData();
+        $this->data['id'] = $entity->getKeyId();
+
+        array_push($farms, clone $this);
+      }
+
+      return $farms;
+    }
+  }
+
+  public function delete()
+  {
+    $entity = $this->store->fetchById($this->data['id']);
+    $this->store->delete($entity);
+  }
 }

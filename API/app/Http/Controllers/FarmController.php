@@ -8,12 +8,16 @@ class FarmController extends Controller {
 
     public function getWhereId($farmid, $token) {
 
-        //$farm = App\Farm::find($farmid);
         $farm = new Farm;
-        $farm->name = 'Farm Dude 6';
-        $farm->number = 5754;
+        $farm->name = 'Farm';
+        $farm->number = 3111;
 
-        $farm->upsert();
+        //$farm->upsert();
+
+        $farm = $farm->fetch();
+        $farm->delete();
+
+        //var_dump($obj->getData());
 
         return $token;
     }

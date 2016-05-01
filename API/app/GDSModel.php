@@ -6,6 +6,8 @@ use \GDS\Entity;
 use \GDS\Store;
 use \GDS\Schema;
 use \GDS\Gateway\GoogleAPIClient;
+use Illuminate\Http\Request;
+use Validator;
 
 abstract class GDSModel
 {
@@ -18,8 +20,15 @@ abstract class GDSModel
   private $class;
 
   private $data;
+  private $blueprint;
 
-  // Simple accessor
+  // Simple mutator
+  public function setBlueprint($blueprint)
+  {
+    return $this->blueprint = $blueprint;
+  }
+
+  // Simple accessors
   public function getData()
   {
     return $this->data;
@@ -28,10 +37,7 @@ abstract class GDSModel
   // Prepare this instance.
   function __construct()
   {
-    $data = array();
-
     $this->class = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
-
     $this->client = GoogleAPIClient::createClientFromJson('../gdskey.json');
     $this->gateway = new GoogleAPIClient($this->client, 'laravel-api');
     $this->schema = new Schema($this->class);
@@ -112,10 +118,13 @@ abstract class GDSModel
     {
       $entity = $this->store->fetchOne();
 
-      $this->data = $entity->getData();
-      $this->data['id'] = $entity->getKeyId();
+      if($entity !== null)
+      {
+        $this->data = $entity->getData();
+        $this->data['id'] = $entity->getKeyId();
 
-      return $this;
+        return $this;
+      }
     }
     else
     {
@@ -133,9 +142,66 @@ abstract class GDSModel
     }
   }
 
+  public function fetchById($id)
+  {
+    $entity = $this->store->fetchById($id);
+
+    if($entity !== null)
+    {
+      $this->data = $entity->getData();
+      $this->data['id'] = $entity->getKeyId();
+
+      return $this;
+    }
+  }
+
+  public function fetchByNamespace($namespace)
+  {
+    $entity = $this->store->fetchByName($namespace);
+
+    if($entity !== null)
+    {
+      $this->data = $entity->getData();
+      $this->data['id'] = $entity->getKeyId();
+
+      return $this;
+    }
+  }
+
+  // Deleting
   public function delete()
   {
     $entity = $this->store->fetchById($this->data['id']);
     $this->store->delete($entity);
+  }
+
+  public function consume($array)
+  {
+    foreach ($array as $key => $value)
+    {
+      $this->data[$key] = $value;
+    }
+  }
+
+  public function validateRequest(Request $request)
+  {
+    $validator = Validator::make($request->all(), $this->blueprint);
+
+    if ($validator->fails())
+    {
+      return $validator->errors()->all();
+    }
+    else
+    {
+      foreach ($request->all() as $key => $value)
+      {
+        if (!array_key_exists($key, $this->blueprint))
+        {
+          return $key . " isn't a valid " . $this->class . " object property.";
+        }
+      }
+    }
+
+    return true;
   }
 }

@@ -3,23 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Farm;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class FarmController extends Controller {
 
-    public function getWhereId($farmid, $token) {
+  public function getWhereId($farmid, $token) {
 
-        $farm = new Farm;
-        $farm->name = 'Farm';
-        $farm->number = 3111;
+    $farm = new Farm;
+    $farm = $farm->fetchById(5681034041491456);
 
-        //$farm->upsert();
+    return json_encode($farm->getData());
+  }
 
-        $farm = $farm->fetch();
-        $farm->delete();
+  public function getAll()
+  {
+    $farms = $farm->fetch(100);
+    return json_encode($farms);
+  }
 
-        //var_dump($obj->getData());
+  public function upsert(Request $request)
+  {
+    $farm = new Farm;
+    $valid = $farm->validateRequest($request);
 
-        return $token;
+    if($valid === true)
+    {
+      $farm->consume($request->all());
+      $farm->upsert();
+      return json_encode($farm->getData());
     }
-
+    else
+    {
+      return json_encode($valid);
+    }
+  }
 }

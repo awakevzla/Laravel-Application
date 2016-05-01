@@ -14,11 +14,14 @@
 Route::get('/', function () {
   return view('welcome');
 });
+
 //,'middleware' => ['api']
 Route::group(['prefix' => 'api'], function () {
 
-  Route::group(['prefix' => 'farm/{id}'], function () {
-    Route::get('/{client_token}', 'FarmController@getWhereId')->where('id', '[0-9]+');
+  Route::group(['prefix' => 'farm/'], function () {
+    Route::get('{id}/{client_token}', 'FarmController@getWhereId')->where('id', '[0-9]+');
+    Route::get('all/{client_token}', 'FarmController@getAll');
+    Route::post('upsert/', 'FarmController@upsert');
   });
 
   Route::group(['prefix' => 'user'], function () {

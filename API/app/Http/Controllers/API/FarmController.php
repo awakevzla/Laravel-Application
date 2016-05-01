@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\API;
 
 use DB;
+use App\Models\Farm;
 
 class FarmController extends Controller {
 
     public function getWhereId($farmid) {
 
-        $result = DB::select('call Farms_GetWhereId(?)', array($farmid));
-        return json_encode($result);
+        //$farm = App\Farm::find($farmid);
+        //return Response::json($farm);
+        return Response::json(1);
     }
 
 }

@@ -4,8 +4,9 @@ var $domain = "hhapi.com";
 angular.module('app')
 .controller('FarmAuthenticationController', function ($scope, $http, $state) {
   $http({
-    url: "http://" + $domain + "/api/user/type/" + $user['token'],
-    method: "GET"
+    url: "http://" + $domain + "/api/user/type",
+    data: {token: $user['token'], client_token: $user['token']}
+    method: "POST"
   }).success(function(response) {
 
     if(ValidateUserType($state.current.name, 'farm', 'Farmer', response)){

@@ -14,16 +14,17 @@
 Route::get('/', function () {
   return view('welcome');
 });
-
+//,'middleware' => ['api']
 Route::group(['prefix' => 'api'], function () {
 
-  Route::group(['prefix' => 'farm'], function () {
-    Route::get('/id/{farmid}', 'API\FarmController@getWhereId')->where('farmid', '[0-9]+');
+  Route::group(['prefix' => 'farm/{id}'], function () {
+    Route::get('/{client_token}', 'API\FarmController@getWhereId')->where('id', '[0-9]+');
   });
 
   Route::group(['prefix' => 'user'], function () {
     Route::get('/id/{id}', 'API\UserCredentialsController@getWhereId')->where('id', '[0-9]+');
-    Route::get('/type/{token}', 'API\SessionController@getUserWhereToken');
+
+    Route::post('/type', 'API\SessionController@getUserWhereToken');
   });
 
 });

@@ -2,19 +2,19 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Farm extends Model
 {
     protected $table = 'UserCredentials';
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'usercredentialsid', 'name', 'email', 'password', 'usertype'
+        'usercredentialsid', 'name', 'email', 'usertype'
     ];
 
     /**
@@ -23,6 +23,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'salt',
     ];
 }

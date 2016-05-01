@@ -96,7 +96,7 @@ $.AdminLTE.options = {
   //Direct Chat plugin options
   directChat: {
     //Enable direct chat by default
-    enable: true,
+    enable: false,
     //The button to open and close the chat contacts pane
     contactToggleSelector: '[data-widget="chat-pane-toggle"]'
   },
@@ -752,7 +752,7 @@ function _init() {
  *      This is a demo file used only for the main dashboard (index.html)
  **/
 
-$(function () {
+function DashboardGraphs () {
 
   "use strict";
 
@@ -954,7 +954,7 @@ $(function () {
     }
   });
 
-});
+}
 
 /**
  * AdminLTE Demo Menu
@@ -1294,3 +1294,6 @@ $(function () {
 
   }
 })(jQuery, $.AdminLTE);
+
+_init();
+DashboardGraphs();

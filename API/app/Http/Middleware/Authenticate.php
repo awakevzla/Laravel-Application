@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class Authenticate
 {
@@ -17,12 +18,20 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->guest()) {
-            if ($request->ajax() || $request->wantsJson()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('login');
-            }
+
+      // To come...
+      // if (Request::secure())
+      // {
+      //     //
+      // }
+
+        //$validator = Validator::make(array('client_token' => $request->input('client_token')), [
+        $validator = Validator::make(array('client_token' => $request->client_token)), [
+          'client_token' => 'required|size:32|exists:Clients,token'
+        ]);
+
+        if ($validator->fails()) {
+          return $validator->errors()->all();
         }
 
         return $next($request);

@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api'], function () {
 
   Route::group(['prefix' => 'farm/{id}'], function () {
-    Route::get('/{client_token}', 'API\FarmController@getWhereId')->where('id', '[0-9]+');
+    Route::get('/{client_token}', 'FarmController@getWhereId')->where('id', '[0-9]+');
   });
 
   Route::group(['prefix' => 'user'], function () {

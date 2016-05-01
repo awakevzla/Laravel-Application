@@ -2,27 +2,35 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use GDS\Entity;
 
-class Farm extends Model
+class Farm extends GDS\Entity
 {
-    protected $table = 'UserCredentials';
 
     /**
-     * The attributes that are mass assignable.
+     * Build and return a Schema object describing the data model
      *
-     * @var array
+     * @return \GDS\Schema
      */
-    protected $fillable = [
-        'usercredentialsid', 'name', 'email', 'usertype'
-    ];
+    public function buildSchema()
+    {
+      // $thing = $this->createEntity([
+      //     'title' => 'Some Book',
+      //     'author' => 'A N Other Guy',
+      //     'isbn' => '1840224313'
+      // ]);
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'salt',
-    ];
+        $this->setEntityClass('\\Book');
+
+        return $this->createEntity([
+            'title' => 'Some Book',
+            'author' => 'A N Other Guy',
+            'isbn' => '1840224313'
+        ]);
+
+        // return (new GDS\Schema('Book'))
+        //     ->addString('title')
+        //     ->addString('author')
+        //     ->addString('isbn', TRUE);
+    }
 }

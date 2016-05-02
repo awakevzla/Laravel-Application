@@ -1,8 +1,34 @@
-<div>
-  <form ng-submit="LoginModalCtrl.submit(_email, _password)">
-    <input type="email" ng-model="_email" />
-    <input type="password" ng-model="_password" />
-    <button>Submit</button>
-  </form>
-  <button ng-click="LoginModalCtrl.cancel()">Cancel</button>
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Login To Your Account</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="email">E-mail Address</label>
+  <div class="col-md-4">
+  <input id="email" name="email" type="text" placeholder="john.doe@gmail.com" class="form-control input-md" required="">
+  <span class="help-block">Your e-mail address.</span>
+  </div>
 </div>
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="password">Password</label>
+  <div class="col-md-4">
+    <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="">
+    <span class="help-block">Your password.</span>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="submit"></label>
+  <div class="col-md-4">
+    <button id="submit" name="submit" class="btn btn-primary" style="float:right">Login</button>
+  </div>
+</div>
+
+</fieldset>
+</form>

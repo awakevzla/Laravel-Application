@@ -1,3 +1,5 @@
+var $countries = [];
+
 angular.module('app', [
   'ui.router'
 ])
@@ -26,6 +28,19 @@ angular.module('app', [
     stylesheets: [
       "css/form.css"
     ],
+    scripts: [
+      "js/register.js"
+    ],
+  })
+  .state('registerfarm', {
+    url: '/registerfarm',
+    templateUrl: 'html/registerfarm.html',
+    stylesheets: [
+      "css/form.css"
+    ],
+    scripts: [
+      "js/registerfarm.js"
+    ]
   })
   // Farm routing
   .state('farm', {

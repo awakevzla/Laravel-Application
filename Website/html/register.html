@@ -2,7 +2,7 @@
 
 <div id='errors'></div>
 
-<form id='register' class="form-horizontal" onsubmit="submitForm('register', '/user', '/login')">
+<form id='register' class="form-horizontal" onsubmit="register()">
 <fieldset>
 
 <!-- Form Name -->
@@ -11,7 +11,7 @@
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="firstname">First Name</label>
-  <div class="col-md-4">
+  <div class="col-md-8">
   <input id="firstname" name="firstname" type="text" placeholder="John" class="form-control input-md" required="">
   <span class="help-block">Your first name.</span>
   </div>
@@ -20,7 +20,7 @@
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="lastname">Last Name</label>
-  <div class="col-md-4">
+  <div class="col-md-8">
   <input id="lastname" name="lastname" type="text" placeholder="Doe" class="form-control input-md" required="">
   <span class="help-block">Your last name.</span>
   </div>
@@ -29,7 +29,7 @@
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="email">E-mail Address</label>
-  <div class="col-md-4">
+  <div class="col-md-8">
   <input id="email" name="email" type="text" placeholder="john.doe@gmail.com" class="form-control input-md" required="">
   <span class="help-block">Your e-mail address.</span>
   </div>
@@ -38,11 +38,11 @@
 <!-- Password input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="password">Password</label>
-  <div class="col-md-4">
+  <div class="col-md-8">
     <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="">
     <span class="help-block">Your password. Make this complex.</span>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-8 col-md-offset-4">
     <input id="password_confirmation" name="password_confirmation" type="password" placeholder="" class="form-control input-md" required="">
     <span class="help-block">Confirm your password.</span>
   </div>
@@ -51,7 +51,7 @@
 <!-- Multiple Radios -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="gender">Gender</label>
-  <div class="col-md-4">
+  <div class="col-md-8">
   <div class="radio">
     <label for="gender-0">
       <input type="radio" name="gender" id="gender-0" value="Male" checked="checked">
@@ -70,7 +70,7 @@
 <!-- Select Basic -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="type">Account Type</label>
-  <div class="col-md-2">
+  <div class="col-md-8">
     <select id="type" name="type" class="form-control">
       <option value="Farmer">Farmer</option>
       <option value="CSA Customer">CSA Customer</option>
@@ -81,7 +81,7 @@
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="submit"></label>
-  <div class="col-md-4">
+  <div class="col-md-8">
     <button id="submit" name="submit" class="btn btn-inverse" style="float:right">Register</button>
   </div>
 </div>

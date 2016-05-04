@@ -15,7 +15,8 @@ class EntityController extends Controller
 
     if($entity == null)
     {
-      return json_encode("That " . $class . " record doesn't exist.");
+      $payload  = json_encode(['error' => "That " . $class . " record doesn't exist."]);
+      return response()->json($payload, 404);
     }
 
     return json_encode($entity->getData());
@@ -23,8 +24,15 @@ class EntityController extends Controller
 
   public function fetchAll($entity)
   {
+    $class = $entity->getClass();
     $entities = $entity->fetch(100);
     $json = array();
+
+    if(count($entities) == 0)
+    {
+      $json = json_encode(['error' => "No " . $class . " records exist."]);
+      return response()->json($json, 404);
+    }
 
     foreach ($entities as $item)
     {
@@ -46,7 +54,7 @@ class EntityController extends Controller
     }
     else
     {
-      return json_encode($valid);
+      return response()->json(json_encode(['error' => $valid]), 400);
     }
   }
 

@@ -193,7 +193,7 @@ abstract class GDSModel
     }
   }
 
-  public function validateRequest(Request $request)
+  public function validateRequest(Request &$request)
   {
     $validator = Validator::make($request->all(), $this->blueprint);
 
@@ -203,8 +203,16 @@ abstract class GDSModel
     }
     else
     {
-      foreach ($request->all() as $key => $value)
+      $data = $request->all();
+
+      foreach ($data as $key => $value)
       {
+        if(strpos($key, '_confirmation') !== false)
+        {
+          unset($data[$key]);
+          $request->replace($data);
+        }
+        else
         if (!array_key_exists($key, $this->blueprint))
         {
           return $key . " isn't a valid " . $this->class . " object property.";

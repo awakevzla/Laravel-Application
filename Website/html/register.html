@@ -1,8 +1,12 @@
-<form class="form-horizontal">
+<div class="form">
+
+<div id='errors'></div>
+
+<form id='register' class="form-horizontal" onsubmit="submitForm('register', '/user', '/login')">
 <fieldset>
 
 <!-- Form Name -->
-<legend>Register Your Account</legend>
+<legend>Register Your {{appname}} Account</legend>
 
 <!-- Text input-->
 <div class="form-group">
@@ -37,6 +41,10 @@
   <div class="col-md-4">
     <input id="password" name="password" type="password" placeholder="" class="form-control input-md" required="">
     <span class="help-block">Your password. Make this complex.</span>
+  </div>
+  <div class="col-md-4">
+    <input id="password_confirmation" name="password_confirmation" type="password" placeholder="" class="form-control input-md" required="">
+    <span class="help-block">Confirm your password.</span>
   </div>
 </div>
 
@@ -80,3 +88,4 @@
 
 </fieldset>
 </form>
+</div>

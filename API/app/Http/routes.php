@@ -22,14 +22,15 @@ Route::group(['prefix' => 'api'], function ()
   {
     // Fetching
     Route::get('{id}', 'EntityController@fetchById')->where('id', '[0-9]+');
-    Route::get('all', 'EntityController@fetchAll');
+    Route::get('/', 'EntityController@fetchAll');
     Route::get('template', 'EntityController@fetchTemplate');
 
     // Delete
-    Route::get('delete', 'EntityController@delete')->where('id', '[0-9]+');
+    Route::delete('/', 'EntityController@delete')->where('id', '[0-9]+');
 
     // Upsert
-    Route::post('upsert', 'EntityController@upsert');
+    Route::post('/', 'EntityController@upsert');
+    Route::put('/', 'EntityController@upsert');
   });
 
 });

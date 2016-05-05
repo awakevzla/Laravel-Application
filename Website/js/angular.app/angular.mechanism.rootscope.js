@@ -45,29 +45,25 @@ var rootScopeMechanism = {
   },
   SetStyleSheets: function(stylesheets) {
 
+    $('#styles').empty();
+
     if(stylesheets !== null && stylesheets !== undefined)
     {
       stylesheets.forEach(function(entry) {
-        $('head').append('<link rel="stylesheet" href="' + entry + '">');
+        $('#styles').append('<link rel="stylesheet" href="' + entry + '">');
       });
     }
   },
   SetStateScript: function(scripts) {
 
+    $('#scripts').empty();
+
     if(scripts !== null && scripts !== undefined)
     {
       scripts.forEach(function(entry) {
-        $('html').append('<script src="' + entry + '"></script>');
+        $('#scripts').append('<script src="' + entry + '"></script>');
       });
     }
-
-    // jQuery.ajax({
-    //       url: 'js/' + scriptName + '.js',
-    //       dataType: 'script',
-    //       cache: true
-    // }).done(function() {
-    //
-    // });
   }
 
 };

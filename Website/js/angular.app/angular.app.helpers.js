@@ -1,5 +1,7 @@
 var helper = {
 
+  down: "We're currently down for maintenance. Try again later!",
+
   isObject: function(val) {
     return val instanceof Object;
   },

@@ -92,8 +92,20 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'name' => [
+            'regex' => 'The farm\'s name can contain letters and spaces.',
+        ],
+        'mission' => [
+            'regex' => 'The mission statement cannot contain special characters.',
+        ],
+        'city' => [
+            'regex' => 'The city can contain letters and spaces.',
+        ],
+        'street' => [
+            'regex' => 'The street name can contain letters and spaces.',
+        ],
+        'phone' => [
+            'regex' => 'The phone number can contain numbers, spaces and the following: ()+',
         ],
     ],
 

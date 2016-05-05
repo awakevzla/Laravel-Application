@@ -1,4 +1,4 @@
-var $countries = [];
+var $farm;
 
 angular.module('app', [
   'ui.router'
@@ -21,6 +21,9 @@ angular.module('app', [
     stylesheets: [
       "css/form.css"
     ],
+    scripts: [
+      "js/login.js"
+    ],
   })
   .state('register', {
     url: '/register',
@@ -35,6 +38,7 @@ angular.module('app', [
   .state('registerfarm', {
     url: '/registerfarm',
     templateUrl: 'html/registerfarm.html',
+    controller: 'FarmAuthenticationController',
     stylesheets: [
       "css/form.css"
     ],

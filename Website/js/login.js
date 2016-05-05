@@ -1,9 +1,9 @@
-function register()
+function loginMan()
 {
-  var data = $('#register').serialize();
+  var data = $('#login').serialize();
 
   $.ajax({
-    url: api.concat('/user'),
+    url: 'http://hhapi.com/login'),
     method: 'POST',
     data: data
   })
@@ -15,7 +15,14 @@ function register()
 
       if($user.type === 'Farmer')
       {
-        window.location.href = '/#/registerfarm';
+        if($user.farmid === undefined)
+        {
+          window.location.href = '/#/registerfarm';
+        }
+        else
+        {
+          window.location.href = '/#/farm/admin/dashboard';
+        }
       }
       else
       {

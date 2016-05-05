@@ -1,5 +1,5 @@
 <?php
-
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,6 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::post('/login', 'LoginController@login');
 
 Route::get('/', function () {
   return view('welcome');

@@ -22,12 +22,70 @@ setTimeout(
         for (i = 0; i < data.provinces.length; i++)
         {
           var name = String(data.provinces[i]);
-          $('#state').append('<option value=' + name + '>' + name + '</option>');
+          $('#state').append('<option value="' + name + '">' + name + '</option>');
         }
       });
     });
 
-  }, 300);
+    setTimeout(
+      function()
+      {
+        $('#country option[value=Canada]').change();
+      }, 100);
 
+    }, 300);
 
-  //https://raw.githubusercontent.com/therebelrobot/countryjs/master/data/afghanistan.json
+    function register()
+    {
+      var data = $('#register').serialize();
+
+      $.ajax({
+        url: api.concat('/farm'),
+        method: 'POST',
+        data: data
+      })
+      .done(function(response) {
+        if(response !== undefined && response !== null)
+        {
+          $farm = JSON.parse(response);
+        }
+      })
+      .fail(function(jqXHR, textStatus) {
+        helper.showErrors(jqXHR.responseText);
+      });
+
+      setTimeout(
+        function()
+        {
+          updateUser();
+        }, 500);
+      }
+
+      function updateUser()
+      {
+        //var data = JSON.stringify($user)
+        $user.password_confirmation = $user.password;
+        $user.farmid = $farm.id;
+
+        console.log($user);
+
+        $.ajax({
+          url: api.concat('/user'),
+          method: 'POST',
+          data: $user
+        })
+        .done(function(response) {
+
+          if(response !== undefined && response !== null)
+          {
+            alert("Yeah!");
+          }
+          else
+          {
+            helper.showErrors(helper.down);
+          }
+        })
+        .fail(function(jqXHR, textStatus) {
+          helper.showErrors(jqXHR.responseText);
+        });
+      }

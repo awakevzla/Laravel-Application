@@ -16,9 +16,25 @@ class User extends GDSModel
       'email' => 'required|email',
       'password' => 'required|between:8,16|confirmed',
       'gender' => 'required|alpha|max:6',
-      'type' => 'required|max:12'
+      'type' => 'required|max:12',
+      'farmid' => 'numeric'
     ];
 
     $this->setBlueprint($blueprint);
+  }
+
+  function login()
+  {
+    $entity = $this->store->fetchOne("SELECT * FROM User WHERE email = @email", [
+      'email' => $this->email
+    ]);
+
+    if($entity !== null)
+    {
+      $this->data = $entity->getData();
+      $this->data['id'] = $entity->getKeyId();
+
+      return $this;
+    }
   }
 }

@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'gds-unique' => 'The :attribute already exists in our database.',
+    'gdsunique' => 'The :attribute already exists in our database.',
 
     'custom' => [
         'name' => [

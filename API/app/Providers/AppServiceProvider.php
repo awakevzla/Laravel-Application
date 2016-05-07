@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-//use Illuminate\Validation\Validator;
 use Validator;
+use \GDS\Entity;
 use \GDS\Store;
 use \GDS\Schema;
 use \GDS\Gateway\GoogleAPIClient;
@@ -18,22 +18,19 @@ class AppServiceProvider extends ServiceProvider
   */
   public function boot()
   {
-    // Validator::extend('gdsunique', function($attribute, $value, $parameters, $validator)
-    // {
-    //   // $client = GoogleAPIClient::createClientFromJson('../gdskey.json');
-    //   // $gateway = new GoogleAPIClient($client, 'laravel-api');
-    //   // $schema = new Schema($parameters);
-    //   // $store = new Store($schema, $gateway);
-    //   //
-    //   // $entity = $store->fetchOne("SELECT @property FROM @entity WHERE @property = @value", [
-    //   //   'property' => $attribute,
-    //   //   'entity' => $parameters,
-    //   //   'value' => $value
-    //   // ]);
-    //   //
-    //   // return ($entity != null && get_class($entity) == 'GDS\\Entity');
-    //   return true;
-    // });
+    Validator::extend('gdsunique', function($attribute, $value, $parameters, $validator)
+    {
+      $client = GoogleAPIClient::createClientFromJson('../gdskey.json');
+      $gateway = new GoogleAPIClient($client, 'laravel-api');
+      $schema = new Schema($parameters[0]);
+      $store = new Store($schema, $gateway);
+
+      $entity = $store->fetchOne("SELECT * FROM ".$parameters[0]." WHERE ".$attribute." = @value", [
+        'value' => $value
+      ]);
+
+      return ($entity == null || get_class($entity) != 'GDS\\Entity');
+    });
   }
 
   /**

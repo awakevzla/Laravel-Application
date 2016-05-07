@@ -107,6 +107,9 @@ return [
         'phone' => [
             'regex' => 'The phone number can contain numbers, spaces and the following: ()+',
         ],
+        'password' => [
+            'regex' => 'The password must contain at least 1 number, 1 letter, and 1 special character.',
+        ],
     ],
 
     /*

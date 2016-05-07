@@ -1,9 +1,9 @@
-function loginMan()
+function login()
 {
   var data = $('#login').serialize();
 
   $.ajax({
-    url: 'http://hhapi.com/login'),
+    url: 'http://hhapi.com/login',
     method: 'POST',
     data: data
   })
@@ -31,7 +31,7 @@ function loginMan()
     }
     else
     {
-      helper.showErrors(helper.down);
+      helper.showErrors(helper.down + "hahahaha");
     }
   })
   .fail(function(jqXHR, textStatus) {

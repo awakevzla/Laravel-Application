@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;;
+namespace App\Models;
 
 use \GDS\Entity;
 use \GDS\Store;
@@ -19,7 +19,10 @@ abstract class GDSModel
   private $entity;
   private $class;
 
+  // A __set override will store the instance values in this.
   private $data;
+
+  // A place for rules to be used by Laravel's Validator. (This is set in the concrete/child class)
   private $blueprint;
 
   // Simple mutator
@@ -94,7 +97,11 @@ abstract class GDSModel
   {
     foreach ($this->data as $key => $value) {
 
-      if(is_bool($value))
+      if($key == 'id')
+      {
+        $this->entity->setKeyId($value);
+      }
+      else if(is_bool($value))
       {
         $this->schema->addBoolean($key);
       }
@@ -109,7 +116,19 @@ abstract class GDSModel
       else
       {
         $this->schema->addString($key);
-        $value = (string)$value;
+
+        if($key == 'password')
+        {
+          $options = [
+            'cost' => 12,
+          ];
+
+          $value = password_hash($value, PASSWORD_BCRYPT, $options);
+        }
+        else
+        {
+          $value = (string)$value;
+        }
       }
 
       $this->entity->$key = $value;
@@ -187,6 +206,8 @@ abstract class GDSModel
 
   public function consume($array)
   {
+    $this->data = [];
+
     foreach ($array as $key => $value)
     {
       $this->data[$key] = $value;
@@ -212,8 +233,7 @@ abstract class GDSModel
           unset($data[$key]);
           $request->replace($data);
         }
-        else
-        if (!array_key_exists($key, $this->blueprint))
+        else if (!array_key_exists($key, $this->blueprint))
         {
           return $key . " isn't a valid " . $this->class . " object property.";
         }

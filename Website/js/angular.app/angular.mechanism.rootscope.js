@@ -7,16 +7,10 @@ angular.module('app')
   $rootScope.appname = appname;
   $rootScope.api = api;
 
-  $rootScope.$on('$stateChangeStart',
-  function(event, toState, toParams, fromState, fromParams, options){
+  $rootScope.$on('$stateChangeSuccess', function(event, toState){
     rootScopeMechanism.SetTitleElement(toState['title']);
     rootScopeMechanism.SetStyleSheets(toState['stylesheets']);
     rootScopeMechanism.SetStateScript(toState['scripts']);
-  });
-
-  $rootScope.$on('$stateChangeSuccess',
-  function(event, toState, toParams, fromState, fromParams){
-
   });
 
   // $rootScope.$on('$viewContentLoading',

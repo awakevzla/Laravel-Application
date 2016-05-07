@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;;
+namespace App\Models;
 
 use App\Models\GDSModel;
 
@@ -11,10 +11,10 @@ class User extends GDSModel
     parent::__construct();
 
     $blueprint = [
-      'firstname' => 'required|alpha|max:85',
-      'lastname' => 'required|alpha|max:85',
+      'firstname' => 'required|alpha|max:12',
+      'lastname' => 'required|alpha|max:12',
       'email' => 'required|email',
-      'password' => 'required|between:8,16|confirmed',
+      'password' => 'required|between:8,16|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/',
       'gender' => 'required|alpha|max:6',
       'type' => 'required|max:12',
       'farmid' => 'numeric'
@@ -23,18 +23,29 @@ class User extends GDSModel
     $this->setBlueprint($blueprint);
   }
 
-  function login()
+  public function login()
   {
     $entity = $this->store->fetchOne("SELECT * FROM User WHERE email = @email", [
       'email' => $this->email
     ]);
 
-    if($entity !== null)
+    if($entity !== null && get_class($entity) == 'GDS\\Entity')
     {
-      $this->data = $entity->getData();
-      $this->data['id'] = $entity->getKeyId();
+      $temp = $this->password;
+
+      $this->consume($entity->getData());
+      $this->id = $entity->getKeyId();
+
+      if(!password_verify($temp, $this->password))
+      {
+        return 'Wrong Password';
+      }
+
+      unset($this->password);
 
       return $this;
     }
+
+    return 'Wrong Email';
   }
 }

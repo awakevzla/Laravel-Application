@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'api'], function ()
 {
-  // ------------ Farm Routes ------------
+  // ------------ Generic Routes ------------
   Route::group(['prefix' => '{entity}'], function ()
   {
     // Fetching

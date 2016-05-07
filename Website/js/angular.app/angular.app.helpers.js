@@ -28,7 +28,13 @@ var helper = {
   showErrors: function(errors)
   {
     var data = JSON.parse(errors);
-    data = JSON.parse(data);
+
+    try {
+      data = JSON.parse(data);
+    }
+    catch(err) {
+      data = JSON.parse(errors);
+    }
 
     var string = String(data.error).split('.,').join('.<br>');
 

@@ -13,7 +13,7 @@ class User extends GDSModel
     $blueprint = [
       'firstname' => 'required|alpha|max:12',
       'lastname' => 'required|alpha|max:12',
-      'email' => 'required|email',
+      'email' => 'required|email|gds-unique',
       'password' => 'required|between:8,16|confirmed|regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/',
       'gender' => 'required|alpha|max:6',
       'type' => 'required|max:12',
@@ -29,7 +29,7 @@ class User extends GDSModel
       'email' => $this->email
     ]);
 
-    if($entity !== null && get_class($entity) == 'GDS\\Entity')
+    if($entity != null && get_class($entity) == 'GDS\\Entity')
     {
       $temp = $this->password;
 

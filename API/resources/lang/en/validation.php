@@ -91,6 +91,8 @@ return [
     |
     */
 
+    'gds-unique' => 'The :attribute already exists in our database.',
+
     'custom' => [
         'name' => [
             'regex' => 'The farm\'s name can contain letters and spaces.',

@@ -147,7 +147,7 @@ abstract class GDSModel
     {
       $entity = $this->store->fetchOne();
 
-      if($entity !== null)
+      if($entity != null)
       {
         $this->data = $entity->getData();
         $this->data['id'] = $entity->getKeyId();
@@ -175,7 +175,7 @@ abstract class GDSModel
   {
     $entity = $this->store->fetchById($id);
 
-    if($entity !== null)
+    if($entity != null)
     {
       $this->data = $entity->getData();
       $this->data['id'] = $entity->getKeyId();
@@ -188,7 +188,7 @@ abstract class GDSModel
   {
     $entity = $this->store->fetchByName($namespace);
 
-    if($entity !== null)
+    if($entity != null)
     {
       $this->data = $entity->getData();
       $this->data['id'] = $entity->getKeyId();

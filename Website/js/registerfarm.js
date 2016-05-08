@@ -1,3 +1,40 @@
+function registerFarm()
+{
+  var data = $('#register').serialize();
+
+  $.when(helper.sendRequest(data, '/farm', 'POST')).done(function(farm){
+    if(farm !== undefined)
+    {
+      $farm = farm;
+      updateUser(farm.id);
+    }
+    else
+    {
+      helper.showErrors('helper.down');
+      console.log('Couldn\'t register a farm entity, or didn\'t get the proper response.');
+    }
+  });
+}
+
+function updateUser(farmid)
+{
+  $user.farmid = farmid;
+
+  $.when(helper.sendRequest($user, '/user', 'PUT')).done(function(user){
+    if(user !== undefined)
+    {
+      user = $user;
+      window.location.href = '/#/farm/dashboard';
+    }
+    else
+    {
+      helper.showErrors(helper.down);
+      console.log('Couldn\'t update a user entity, or didn\'t get the proper response.');
+    }
+  });
+}
+
+// Preliminary things required to render the view.
 setTimeout(
   function()
   {
@@ -31,61 +68,6 @@ setTimeout(
       function()
       {
         $('#country option[value=Canada]').change();
-      }, 150);
+      }, 100);
 
-    }, 250);
-
-    function register()
-    {
-      var data = $('#register').serialize();
-
-      $.ajax({
-        url: $api.concat('/farm'),
-        method: 'POST',
-        data: data
-      })
-      .done(function(response) {
-        if(response !== undefined && response !== null)
-        {
-          $farm = JSON.parse(response);
-          updateUser();
-        }
-      })
-      .fail(function(jqXHR, textStatus) {
-        helper.showErrors(jqXHR.responseText);
-      });
-    }
-
-    function updateUser()
-    {
-      $user.password_confirmation = $user.password;
-      $user.farmid = $farm.id;
-
-      $.ajax({
-        url: $api.concat('/user'),
-        method: 'PUT',
-        data: $user
-      })
-      .done(function(response) {
-
-        if(response !== undefined && response !== null)
-        {
-          window.location.href = '/#/farm/dashboard';
-        }
-        else
-        {
-          helper.showErrors(helper.down);
-        }
-      })
-      .fail(function(jqXHR, textStatus) {
-        helper.showErrors(jqXHR.responseText);
-      });
-    }
-
-    setTimeout(
-      function()
-      {
-        $('.form').css("font-family", 'Roboto');
-        $('legend').css("font-weight", '100');
-        $('legend').css("font-size", "28px");
-      }, 1);
+    }, 150);

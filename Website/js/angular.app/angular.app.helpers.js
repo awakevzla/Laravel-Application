@@ -12,34 +12,40 @@ var helper = {
     }
     return array;
   },
-  sendRequest: function(data, url, type) {
-
+  sendRequest: function(data, url, type)
+  {
     $.ajax({
       url: $api.concat(url),
       method: type,
       data: data
     })
     .done(function(data) {
-      return JSON.parse(data);
+      return data;
     })
     .fail(function(jqXHR, textStatus) {
-      showErrors(jqXHR.responseText);
+      this.showErrors(jqXHR.responseText);
     });
   },
   showErrors: function(errors)
   {
-    var data = JSON.parse(errors);
+    var data = errors;
+    var string = errors;
 
     try {
-      data = JSON.parse(data);
+      data = JSON.parse(errors);
+      try {
+        data = JSON.parse(data);
+        string = String(data.error).split('.,').join('.<br>');
+      }
+      catch(err) {
+        string = String(data.error).split('.,').join('.<br>');
+      }
     }
     catch(err) {
-      data = JSON.parse(errors);
+      console.log(errors);
     }
 
-    var string = String(data.error).split('.,').join('.<br>');
-
-    $('#errors').addClass("alert alert-danger");
+    $('#errors').addClass("alert alert-warning");
     $('#errors').html('<p>' + string + '</p>');
   },
   showInfo: function(message)

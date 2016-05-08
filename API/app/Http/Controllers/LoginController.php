@@ -28,7 +28,7 @@ class LoginController extends Controller
     switch($user->login())
     {
       case 'Wrong Password':
-        $json = json_encode(['error' => "That's not your password."]);
+        $json = json_encode(['error' => "That's definitely not your password."]);
         return response()->json($json, 400);
 
       case 'Wrong Email':

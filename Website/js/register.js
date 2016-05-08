@@ -34,4 +34,4 @@ function register()
   });
 }
 
-$('legend').addClass('animated slideInLeft');
+//$('legend').addClass('animated slideInLeft');

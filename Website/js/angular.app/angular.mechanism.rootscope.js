@@ -1,3 +1,7 @@
+var $scripts;
+var $title;
+var $styles;
+
 angular.module('app')
 .run(['$rootScope', function($rootScope) {
 
@@ -5,16 +9,15 @@ angular.module('app')
   $rootScope.api = $api;
 
   $rootScope.$on('$stateChangeStart', function(event, toState){
+    $scripts = toState['scripts'];
+    $title = toState['title'];
+    $styles = toState['stylesheets'];
+  });
 
-    rootScopeMechanism.SetTitleElement(toState['title']);
-    rootScopeMechanism.SetStyleSheets(toState['stylesheets']);
-
-    setTimeout(
-      function()
-      {
-        rootScopeMechanism.SetStateScript(toState['scripts']);
-      }, 1);
-
+  $rootScope.$on('$viewContentLoading', function(event, viewConfig){
+    rootScopeMechanism.SetTitleElement($title);
+    rootScopeMechanism.SetStyleSheets($styles);
+    rootScopeMechanism.SetStateScript($scripts);
   });
 
   $rootScope.$on('unauthorized', function (event, message) {

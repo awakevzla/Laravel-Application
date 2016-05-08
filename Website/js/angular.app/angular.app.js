@@ -10,8 +10,9 @@ angular.module('app', [
     url: '/login',
     templateUrl: 'html/login.html',
     stylesheets: [
-      'https://fonts.googleapis.com/css?family=Roboto:100,300,400',
-      "css/form.css"
+      'https://fonts.googleapis.com/css?family=Roboto:100,300',
+      "css/form.css",
+      "css/animate.css",
     ],
     scripts: [
       "js/login.js"
@@ -33,7 +34,7 @@ angular.module('app', [
       url: '/registerfarm',
       templateUrl: 'html/registerfarm.html',
       stylesheets: [
-        'https://fonts.googleapis.com/css?family=Roboto:100,300,400',
+        'https://fonts.googleapis.com/css?family=Roboto:100,300',
         "css/form.css",
         "css/animate.css",
       ],
@@ -50,7 +51,7 @@ angular.module('app', [
     // Farm routing
     .state('farm', {
       url: '/farm',
-      templateUrl: 'html/farm.admin.html',
+      templateUrl: 'html/farm.html',
       controller: 'FarmAuthenticationController'
     })
     .state('farm.dashboard', {
@@ -58,7 +59,7 @@ angular.module('app', [
       url: '/dashboard',
       heading: 'Dashboard',
       subheading: 'Tweak it up!',
-      templateUrl: 'html/farm.admin.dashboard.html',
+      templateUrl: 'html/farm.dashboard.html',
       stylesheets: [
         "css/AdminLTE.min.css",
         "css/AdminLTE/_all-skins.min.css",
@@ -70,6 +71,8 @@ angular.module('app', [
         "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"
       ],
       scripts: [
+        "js/adminlte/adminlte.min.js",
+        "js/adminlte/dashboard.js",
         "https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js",
         "plugins/morris/morris.min.js",
         "plugins/sparkline/jquery.sparkline.min.js",
@@ -82,8 +85,6 @@ angular.module('app', [
         "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js",
         "plugins/slimScroll/jquery.slimscroll.min.js",
         "plugins/fastclick/fastclick.min.js",
-        "js/adminlte/adminlte.min.js",
-        "js/adminlte/dashboard.js",
       ]
     })
   }]);

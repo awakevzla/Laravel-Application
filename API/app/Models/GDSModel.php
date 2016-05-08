@@ -153,7 +153,8 @@ abstract class GDSModel
         $this->entity->updated = new DateTime();
       }
 
-      $this->store->upsert($this->entity);
+      $this->entity = $this->store->upsert($this->entity)[0];
+      $this->data['id'] = $this->entity->getKeyId();
     }
   }
 
@@ -268,7 +269,12 @@ abstract class GDSModel
 
       foreach ($data as $key => $value)
       {
-        if(
+        if(strpos($key, '_confirmation') !== false)
+        {
+          unset($data[$key]);
+          $request->replace($data);
+        }
+        else if(
         strpos($key, 'created') !== false ||
         strpos($key, 'updated') !== false ||
         strpos($key, 'id') !== false)

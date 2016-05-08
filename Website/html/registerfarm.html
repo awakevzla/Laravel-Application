@@ -1,17 +1,17 @@
 <div class="form">
 
   <div class="jumbotron">
-    <h1>Hi, {{user.firstname}}</h1>
-    <p>This won't take long.</p>
+    <h1 class="animated fadeIn">Hi, {{user.firstname}}.</h1>
+    <p class="animated fadeIn">This won't take long.</p>
   </div>
 
   <div id='errors'></div>
-
-  <form id='register' class="form-horizontal" onsubmit="register()">
+<div class="register-farm-form animated fadeIn">
+  <form id='register' class="form-horizontal" onsubmit="registerFarm()">
     <fieldset>
 
       <!-- Form Name -->
-      <legend>Register Your Farm's {{appname}} Account</legend>
+      <legend>Together, we'll put your farm on the map.</legend>
 
       <!-- Text input-->
       <div class="form-group">
@@ -118,10 +118,11 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="submit"></label>
         <div class="col-md-8">
-          <button id="submit" name="submit" class="btn btn-inverse" style="float:right">Register</button>
+          <button id="submit" name="submit" class="btn btn-primary" style="float:right">Register</button>
         </div>
       </div>
 
     </fieldset>
   </form>
+</div>
 </div>

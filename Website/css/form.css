@@ -1,5 +1,17 @@
 .form {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   padding-top: 40px;
   margin: auto;
   max-width: 500px;
+}
+
+.jumbotron {
+  background: none;
+}
+
+legend {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  font-size: 28px;
 }

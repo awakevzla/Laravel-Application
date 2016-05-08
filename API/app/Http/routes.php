@@ -1,5 +1,5 @@
 <?php
-use App\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -30,8 +30,8 @@ Route::group(['prefix' => 'api'], function ()
     Route::delete('/', 'EntityController@delete')->where('id', '[0-9]+');
 
     // Upsert
-    Route::post('/', 'EntityController@upsert');
-    Route::put('/', 'EntityController@upsert');
+    Route::post('/', 'EntityController@insert');
+    Route::put('/', 'EntityController@update');
   });
 
 });

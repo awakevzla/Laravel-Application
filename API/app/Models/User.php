@@ -48,4 +48,18 @@ class User extends GDSModel
 
     return 'Wrong Email';
   }
+
+  // Definition of the abstract method called before an upsert.
+  protected function prepare()
+  {
+    if(isset($this->password))
+    {
+      $options = [
+        'cost' => 12,
+      ];
+
+      $this->password = password_hash($this->password, PASSWORD_BCRYPT, $options);
+    }
+  }
+
 }

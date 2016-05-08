@@ -1,50 +1,52 @@
-var appname = "GarbageCan";
-var api = "http://hhapi.com/api";
-
 angular.module('app')
 .run(['$rootScope', function($rootScope) {
 
-  $rootScope.appname = appname;
-  $rootScope.api = api;
+  $rootScope.appname = $appname;
+  $rootScope.api = $api;
 
-  $rootScope.$on('$stateChangeSuccess', function(event, toState){
+  $rootScope.$on('$stateChangeStart', function(event, toState){
+
     rootScopeMechanism.SetTitleElement(toState['title']);
     rootScopeMechanism.SetStyleSheets(toState['stylesheets']);
-    rootScopeMechanism.SetStateScript(toState['scripts']);
+
+    setTimeout(
+      function()
+      {
+        rootScopeMechanism.SetStateScript(toState['scripts']);
+      }, 1);
+
   });
 
-  // $rootScope.$on('$viewContentLoading',
-  // function(event, viewConfig){
-  //
-  // });
-  //
-  // $rootScope.$on('$viewContentLoaded',
-  // function(event){
-  //
-  // });
+  $rootScope.$on('unauthorized', function (event, message) {
+    setTimeout(
+      function()
+      {
+        helper.showInfo(message);
+      }, 25);
+    });
 
 }]);
 
 var rootScopeMechanism = {
 
   SetTitleElement: function(value) {
-    if(value !== null && value !== undefined)
+    if(value !== undefined && value !== null)
     {
-      $('title').html(appname + ' | ' + value);
+      $('title').html($appname + ' | ' + value);
     }
     else
     {
-      $('title').html(appname);
+      $('title').html($appname);
     }
   },
   SetStyleSheets: function(stylesheets) {
 
     $('#styles').empty();
 
-    if(stylesheets !== null && stylesheets !== undefined)
+    if(stylesheets !== undefined && stylesheets !== null)
     {
       stylesheets.forEach(function(entry) {
-        $('#styles').append('<link rel="stylesheet" href="' + entry + '">');
+        $('#styles').append('<link rel="stylesheet" href="' + entry + '" type="text/css">');
       });
     }
   },
@@ -52,7 +54,7 @@ var rootScopeMechanism = {
 
     $('#scripts').empty();
 
-    if(scripts !== null && scripts !== undefined)
+    if(scripts !== undefined && scripts !== null)
     {
       scripts.forEach(function(entry) {
         $('#scripts').append('<script src="' + entry + '"></script>');

@@ -18,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
   */
   public function boot()
   {
+    date_default_timezone_set('America/Halifax');
+
     Validator::extend('gdsunique', function($attribute, $value, $parameters, $validator)
     {
       $client = GoogleAPIClient::createClientFromJson('../gdskey.json');

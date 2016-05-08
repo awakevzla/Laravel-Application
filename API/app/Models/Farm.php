@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\GDSModel;
+use App\Models\User;
 
 class Farm extends GDSModel
 {
@@ -11,21 +12,33 @@ class Farm extends GDSModel
     parent::__construct();
 
     $blueprint = [
-      'name' => 'required|max:85|regex:/^((\w)*(\s)*)+$/',
-      'subdomain' => 'required|alpha|max:25',
+      'name' => 'required|max:25|regex:/^((\w)*(\s)*)+$/',
+      'subdomain' => 'required|alpha|max:25|gdsunique:Farm',
       'mission' => "required|max:200|regex:/^((\w)*(\s)?(\.)?(,)?(;)?(')?(\()?(\))?)+$/",
-      'country' => 'required|alpha|max:85',
-      'state' => 'required|alpha|max:85',
+      'country' => 'required|alpha|max:20',
+      'state' => 'required|alpha|max:20',
       'city' => 'required|max:85|regex:/^((\w)*(\s)*)+$/',
       'streetnumber' => 'required|numeric|max:100000',
-      'street' => 'required|max:85|regex:/^((\w)*(\s)*)+$/',
+      'street' => 'required|max:35|regex:/^((\w)*(\s)*)+$/',
       'postal' => 'required|alpha_num|max:8',
-      'country' => 'required|alpha|max:85',
-      'phone' => 'required|max:24|regex:/^(\(?\)?-?\s?\d?)+$/',
-      'email' => 'required|email',
+      'country' => 'required|max:45|regex:/^((\w)*(\s)*)+$/',
+      'phone' => 'required|max:25|regex:/^(\(?\)?-?\s?\d?)+$/',
+      'email' => 'required|email|gdsunique:Farm',
     ];
 
     $this->setBlueprint($blueprint);
   }
 
+  protected function prepare()
+  {
+    try {
+      $user = new User;
+      $user->fetchById(5717271485874176);
+
+      $this->setAncestor($user);
+    } catch (Exception $e) {
+
+    }
+
+  }
 }

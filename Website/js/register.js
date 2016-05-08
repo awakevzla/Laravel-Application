@@ -1,9 +1,10 @@
 function register()
 {
   var data = $('#register').serialize();
+  $cache.password = data.password;
 
   $.ajax({
-    url: api.concat('/user'),
+    url: $api.concat('/user'),
     method: 'POST',
     data: data
   })
@@ -12,6 +13,7 @@ function register()
     if(response !== undefined && response !== null)
     {
       $user = JSON.parse(response);
+      $user.password = $cache.password;
 
       if($user.type === 'Farmer')
       {
@@ -31,3 +33,5 @@ function register()
     helper.showErrors(jqXHR.responseText);
   });
 }
+
+$('legend').addClass('animated slideInLeft');

@@ -8,6 +8,7 @@ use \GDS\Schema;
 use \GDS\Gateway\GoogleAPIClient;
 use Illuminate\Http\Request;
 use Validator;
+use DateTime;
 
 abstract class GDSModel
 {
@@ -25,6 +26,9 @@ abstract class GDSModel
   // A place for rules to be used by Laravel's Validator. (This is set in the concrete/child class)
   private $blueprint;
 
+  // Called by instances before an upsert.
+  abstract protected function prepare();
+
   // Simple mutator
   public function setBlueprint($blueprint)
   {
@@ -35,6 +39,11 @@ abstract class GDSModel
   public function getData()
   {
     return $this->data;
+  }
+
+  public function getEntity()
+  {
+    return $this->entity;
   }
 
   public function getClass()
@@ -95,11 +104,21 @@ abstract class GDSModel
   // Persistance
   public function upsert()
   {
+    $this->schema->addDatetime('created');
+    $this->schema->addDatetime('updated');
+
+    $this->prepare();
+
     foreach ($this->data as $key => $value) {
 
       if($key == 'id')
       {
         $this->entity->setKeyId($value);
+        unset($this->data['id']);
+      }
+      else if($key == 'updated')
+      {
+        $value = new DateTime();
       }
       else if(is_bool($value))
       {
@@ -116,26 +135,24 @@ abstract class GDSModel
       else
       {
         $this->schema->addString($key);
-
-        if($key == 'password')
-        {
-          $options = [
-            'cost' => 12,
-          ];
-
-          $value = password_hash($value, PASSWORD_BCRYPT, $options);
-        }
-        else
-        {
-          $value = (string)$value;
-        }
+        $value = (string)$value;
       }
 
       $this->entity->$key = $value;
     }
 
-    if(count($this->schema->getProperties(), COUNT_RECURSIVE) > 0)
+    // Check that there's more feilds than two timestamps.
+    if(count($this->schema->getProperties(), COUNT_RECURSIVE) > 2)
     {
+      if(!isset($this->entity->created))
+      {
+        $this->entity->created = new DateTime();
+      }
+      if(!isset($this->entity->updated))
+      {
+        $this->entity->updated = new DateTime();
+      }
+
       $this->store->upsert($this->entity);
     }
   }
@@ -145,12 +162,12 @@ abstract class GDSModel
   {
     if($count == 1)
     {
-      $entity = $this->store->fetchOne();
+      $this->entity = $this->store->fetchOne();
 
-      if($entity != null)
+      if($this->entity != null)
       {
-        $this->data = $entity->getData();
-        $this->data['id'] = $entity->getKeyId();
+        $this->data = $this->entity->getData();
+        $this->data['id'] = $this->entity->getKeyId();
 
         return $this;
       }
@@ -161,6 +178,7 @@ abstract class GDSModel
 
       foreach ($this->store->fetchPage($count) as $entity)
       {
+        $this->entity = $entity;
         $this->data = $entity->getData();
         $this->data['id'] = $entity->getKeyId();
 
@@ -173,12 +191,12 @@ abstract class GDSModel
 
   public function fetchById($id)
   {
-    $entity = $this->store->fetchById($id);
+    $this->entity = $this->store->fetchById($id);
 
-    if($entity != null)
+    if($this->entity != null)
     {
-      $this->data = $entity->getData();
-      $this->data['id'] = $entity->getKeyId();
+      $this->data = $this->entity->getData();
+      $this->data['id'] = $this->entity->getKeyId();
 
       return $this;
     }
@@ -186,12 +204,12 @@ abstract class GDSModel
 
   public function fetchByNamespace($namespace)
   {
-    $entity = $this->store->fetchByName($namespace);
+    $this->entity = $this->store->fetchByName($namespace);
 
-    if($entity != null)
+    if($this->entity != null)
     {
-      $this->data = $entity->getData();
-      $this->data['id'] = $entity->getKeyId();
+      $this->data = $this->entity->getData();
+      $this->data['id'] = $this->entity->getKeyId();
 
       return $this;
     }
@@ -214,7 +232,29 @@ abstract class GDSModel
     }
   }
 
-  public function validateRequest(Request &$request)
+  public function validateInsert(Request &$request)
+  {
+    return $this->validateRequest($request);
+  }
+
+  public function validateUpdate(Request &$request)
+  {
+    foreach ($this->blueprint as $key => $value)
+    {
+      $value = str_replace('|gdsunique', '', $value);
+      $value = str_replace('gdsunique|', '', $value);
+      $value = str_replace('|required', '', $value);
+      $value = str_replace('required|', '', $value);
+      $value = str_replace('|confirmed', '', $value);
+      $value = str_replace('confirmed|', '', $value);
+
+      $this->blueprint[$key] = $value;
+    }
+
+    return $this->validateRequest($request);
+  }
+
+  private function validateRequest(Request &$request)
   {
     $validator = Validator::make($request->all(), $this->blueprint);
 
@@ -228,10 +268,12 @@ abstract class GDSModel
 
       foreach ($data as $key => $value)
       {
-        if(strpos($key, '_confirmation') !== false)
+        if(
+        strpos($key, 'created') !== false ||
+        strpos($key, 'updated') !== false ||
+        strpos($key, 'id') !== false)
         {
-          unset($data[$key]);
-          $request->replace($data);
+          continue;
         }
         else if (!array_key_exists($key, $this->blueprint))
         {
@@ -242,4 +284,11 @@ abstract class GDSModel
 
     return true;
   }
+
+  public function setAncestor(GDSModel $entity)
+  {
+    $ancestor = $entity->getEntity();
+    $this->entity->setAncestry($ancestor);
+  }
+
 }

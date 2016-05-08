@@ -1,6 +1,7 @@
 var helper = {
 
   down: "We're currently down for maintenance. Try again later!",
+  unauthorized: "You're not authorized to view this page!",
 
   isObject: function(val) {
     return val instanceof Object;
@@ -14,7 +15,7 @@ var helper = {
   sendRequest: function(data, url, type) {
 
     $.ajax({
-      url: api.concat(url),
+      url: $api.concat(url),
       method: type,
       data: data
     })
@@ -40,7 +41,11 @@ var helper = {
 
     $('#errors').addClass("alert alert-danger");
     $('#errors').html('<p>' + string + '</p>');
-
+  },
+  showInfo: function(message)
+  {
+    $('#errors').addClass("alert alert-info");
+    $('#errors').html('<p>' + message + '</p>');
   }
 };
 

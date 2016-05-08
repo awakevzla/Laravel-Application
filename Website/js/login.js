@@ -1,6 +1,7 @@
 function login()
 {
   var data = $('#login').serialize();
+  $cache.password = data.password;
 
   $.ajax({
     url: 'http://hhapi.com/login',
@@ -12,6 +13,7 @@ function login()
     if(response !== undefined && response !== null)
     {
       $user = JSON.parse(response);
+      $user.password = $cache.password;
 
       if($user.type === 'Farmer')
       {
@@ -21,17 +23,17 @@ function login()
         }
         else
         {
-          window.location.href = '/#/farm/admin/dashboard';
+          window.location.href = '/#/farm/dashboard';
         }
       }
       else
       {
-        window.location.href = '/#/login';
+        // TODO: Go to customer dashboard.
       }
     }
     else
     {
-      helper.showErrors(helper.down + "hahahaha");
+      helper.showErrors(helper.down);
     }
   })
   .fail(function(jqXHR, textStatus) {

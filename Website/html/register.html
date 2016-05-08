@@ -1,4 +1,4 @@
-<div class="form">
+<div class="form animated slideInLeft">
 
 <div id='errors'></div>
 
@@ -6,7 +6,7 @@
 <fieldset>
 
 <!-- Form Name -->
-<legend>Register Your {{appname}} Account</legend>
+<legend class="animated slideInLeft">Register Your {{appname}} Account</legend>
 
 <!-- Text input-->
 <div class="form-group">
@@ -81,8 +81,11 @@
 <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="submit"></label>
-  <div class="col-md-8">
-    <button id="submit" name="submit" class="btn btn-inverse" style="float:right">Register</button>
+  <div class="col-md-6">
+    <p>Already registered? <a ui-sref="login">Login</a>.</p>
+  </div>
+  <div class="col-md-2">
+    <button id="submit" name="submit" class="btn btn-primary" style="float:right">Register</button>
   </div>
 </div>
 

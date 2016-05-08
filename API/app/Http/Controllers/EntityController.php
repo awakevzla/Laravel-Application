@@ -7,6 +7,49 @@ use App\Http\Controllers\Controller;
 
 class EntityController extends Controller
 {
+
+  public function insert($entity, Request $request)
+  {
+    $valid = $entity->validateInsert($request);
+
+    if($valid === true)
+    {
+      $entity->consume($request->all());
+      $entity->upsert();
+      return json_encode($entity->getData());
+    }
+    else
+    {
+      return response()->json(json_encode(['error' => $valid]), 400);
+    }
+  }
+
+  public function update($entity, Request $request)
+  {
+    $valid = $entity->validateUpdate($request);
+
+    if($valid === true)
+    {
+      $entity->consume($request->all());
+      $entity->upsert();
+      return json_encode($entity->getData());
+    }
+    else
+    {
+      return response()->json(json_encode(['error' => $valid]), 400);
+    }
+  }
+
+  public function delete($entity, $id)
+  {
+    $entity->delete($id);
+  }
+
+  public function fetchTemplate($entity)
+  {
+    return json_encode($entity->getBlueprint());
+  }
+
   public function fetchById($entity, $id)
   {
     $class = $entity->getClass();
@@ -39,31 +82,5 @@ class EntityController extends Controller
     }
 
     return json_encode($json);
-  }
-
-  public function upsert($entity, Request $request)
-  {
-    $valid = $entity->validateRequest($request);
-
-    if($valid === true)
-    {
-      $entity->consume($request->all());
-      $entity->upsert();
-      return json_encode($entity->getData());
-    }
-    else
-    {
-      return response()->json(json_encode(['error' => $valid]), 400);
-    }
-  }
-
-  public function delete($entity, $id)
-  {
-    $entity->delete($id);
-  }
-
-  public function fetchTemplate($entity)
-  {
-    return json_encode($entity->getBlueprint());
   }
 }

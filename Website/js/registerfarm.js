@@ -31,16 +31,16 @@ setTimeout(
       function()
       {
         $('#country option[value=Canada]').change();
-      }, 100);
+      }, 150);
 
-    }, 300);
+    }, 250);
 
     function register()
     {
       var data = $('#register').serialize();
 
       $.ajax({
-        url: api.concat('/farm'),
+        url: $api.concat('/farm'),
         method: 'POST',
         data: data
       })
@@ -48,44 +48,44 @@ setTimeout(
         if(response !== undefined && response !== null)
         {
           $farm = JSON.parse(response);
+          updateUser();
         }
       })
       .fail(function(jqXHR, textStatus) {
         helper.showErrors(jqXHR.responseText);
       });
+    }
 
-      setTimeout(
-        function()
+    function updateUser()
+    {
+      $user.password_confirmation = $user.password;
+      $user.farmid = $farm.id;
+
+      $.ajax({
+        url: $api.concat('/user'),
+        method: 'PUT',
+        data: $user
+      })
+      .done(function(response) {
+
+        if(response !== undefined && response !== null)
         {
-          updateUser();
-        }, 500);
-      }
+          window.location.href = '/#/farm/dashboard';
+        }
+        else
+        {
+          helper.showErrors(helper.down);
+        }
+      })
+      .fail(function(jqXHR, textStatus) {
+        helper.showErrors(jqXHR.responseText);
+      });
+    }
 
-      function updateUser()
+    setTimeout(
+      function()
       {
-        //var data = JSON.stringify($user)
-        $user.password_confirmation = $user.password;
-        $user.farmid = $farm.id;
-
-        console.log($user);
-
-        $.ajax({
-          url: api.concat('/user'),
-          method: 'POST',
-          data: $user
-        })
-        .done(function(response) {
-
-          if(response !== undefined && response !== null)
-          {
-            alert("Yeah!");
-          }
-          else
-          {
-            helper.showErrors(helper.down);
-          }
-        })
-        .fail(function(jqXHR, textStatus) {
-          helper.showErrors(jqXHR.responseText);
-        });
-      }
+        $('.form').css("font-family", 'Roboto');
+        $('legend').css("font-weight", '100');
+        $('legend').css("font-size", "28px");
+      }, 1);

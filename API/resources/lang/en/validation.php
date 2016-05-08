@@ -103,6 +103,9 @@ return [
         'city' => [
             'regex' => 'The city can contain letters and spaces.',
         ],
+        'country' => [
+            'regex' => 'The country can contain letters and spaces.',
+        ],
         'street' => [
             'regex' => 'The street name can contain letters and spaces.',
         ],
@@ -125,6 +128,6 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => ['email' => 'e-mail address'],
 
 ];

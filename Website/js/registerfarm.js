@@ -1,36 +1,32 @@
 function registerFarm()
 {
   var data = $('#register').serialize();
+  var response = helper.sendRequest(data, '/farm', 'POST');
 
-  $.when(helper.sendRequest(data, '/farm', 'POST')).done(function(farm){
-    if(farm !== undefined)
-    {
-      $farm = farm;
-      updateUser(farm.id);
-    }
-    else
-    {
-      helper.showErrors('helper.down');
-      console.log('Couldn\'t register a farm entity, or didn\'t get the proper response.');
-    }
+  response.success(function(data)
+  {
+    $farm = helper.parseJson(data);
+    updateUser($farm.id);
+  })
+  .fail(function(jqXHR, textStatus)
+  {
+    helper.showRequestErrors(jqXHR.responseText);
   });
 }
 
 function updateUser(farmid)
 {
   $user.farmid = farmid;
+  var response = helper.sendRequest($user, '/user', 'PUT');
 
-  $.when(helper.sendRequest($user, '/user', 'PUT')).done(function(user){
-    if(user !== undefined)
-    {
-      user = $user;
-      window.location.href = '/#/farm/dashboard';
-    }
-    else
-    {
-      helper.showErrors(helper.down);
-      console.log('Couldn\'t update a user entity, or didn\'t get the proper response.');
-    }
+  response.success(function(data)
+  {
+    $user = helper.parseJson(data);
+    window.location.href = '/#/farm/dashboard';
+  })
+  .fail(function(jqXHR, textStatus)
+  {
+    helper.showRequestErrors(jqXHR.responseText);
   });
 }
 

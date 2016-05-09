@@ -33,10 +33,10 @@ function login()
     }
     else
     {
-      helper.showErrors(helper.down);
+      helper.showInfo('We\'re currently unavailible. Try again soon!');
     }
   })
   .fail(function(jqXHR, textStatus) {
-    helper.showErrors(jqXHR.responseText);
+    helper.showRequestErrors(jqXHR.responseText);
   });
 }

@@ -14,43 +14,57 @@ var helper = {
   },
   sendRequest: function(data, url, type)
   {
-    $.ajax({
+    try {
+      delete data.created;
+      delete data.updated;
+    }
+    catch(err) {
+
+    }
+
+    return $.ajax({
       url: $api.concat(url),
       method: type,
       data: data
-    })
-    .done(function(data) {
-      return data;
-    })
-    .fail(function(jqXHR, textStatus) {
-      this.showErrors(jqXHR.responseText);
     });
   },
-  showErrors: function(errors)
+  parseJson: function(string)
   {
-    var data = errors;
-    var string = errors;
+      data = JSON.parse(string);
 
-    try {
-      data = JSON.parse(errors);
       try {
         data = JSON.parse(data);
-        string = String(data.error).split('.,').join('.<br>');
       }
       catch(err) {
-        string = String(data.error).split('.,').join('.<br>');
-      }
-    }
-    catch(err) {
-      console.log(errors);
-    }
 
-    $('#errors').addClass("alert alert-warning");
-    $('#errors').html('<p>' + string + '</p>');
+      }
+
+      return data;
+  },
+  showRequestErrors: function(errors)
+  {
+    var data = this.parseJson(errors);
+    var string = String(data.error).split('.,').join('.<br>');
+    this.showError(string);
+  },
+  showSuccess: function(message)
+  {
+    $('#errors').addClass("alert alert-success alert-dismissible");
+    $('#errors').html('<p>' + message + '</p>');
+  },
+  showError: function(message)
+  {
+    $('#errors').addClass("alert alert-danger alert-dismissible");
+    $('#errors').html('<p>' + message + '</p>');
+  },
+  showWarning: function(message)
+  {
+    $('#errors').addClass("alert alert-warning alert-dismissible");
+    $('#errors').html('<p>' + message + '</p>');
   },
   showInfo: function(message)
   {
-    $('#errors').addClass("alert alert-info");
+    $('#errors').addClass("alert alert-info alert-dismissible");
     $('#errors').html('<p>' + message + '</p>');
   }
 };

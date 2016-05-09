@@ -109,8 +109,13 @@ abstract class GDSModel
 
     $this->prepare();
 
-    foreach ($this->data as $key => $value) {
+    if(isset($this->data['id']))
+    {
+      $this->entity = $this->store->fetchById($this->data['id']);
+    }
 
+    foreach ($this->data as $key => $value)
+    {
       if($key == 'id')
       {
         $this->entity->setKeyId($value);
@@ -153,8 +158,20 @@ abstract class GDSModel
         $this->entity->updated = new DateTime();
       }
 
-      $this->entity = $this->store->upsert($this->entity)[0];
+      $this->entity = $this->store->upsert($this->entity);
+
+      // If it was an insert a collection is returned by upsert.
+      if(is_array($this->entity))
+      {
+        $this->entity = $this->entity[0];
+      }
+
       $this->data['id'] = $this->entity->getKeyId();
+
+      foreach ($this->entity->getData() as $key => $value)
+      {
+        $this->data[$key] = $value;
+      }
     }
   }
 
@@ -229,6 +246,12 @@ abstract class GDSModel
 
     foreach ($array as $key => $value)
     {
+      if($key == 'id')
+      {
+        $this->entity->setKeyId($value);
+        continue;
+      }
+
       $this->data[$key] = $value;
     }
   }
@@ -242,12 +265,15 @@ abstract class GDSModel
   {
     foreach ($this->blueprint as $key => $value)
     {
-      $value = str_replace('|gdsunique', '', $value);
-      $value = str_replace('gdsunique|', '', $value);
-      $value = str_replace('|required', '', $value);
-      $value = str_replace('required|', '', $value);
-      $value = str_replace('|confirmed', '', $value);
-      $value = str_replace('confirmed|', '', $value);
+      if($key != 'id')
+      {
+        $value = str_replace('|gdsunique', '', $value);
+        $value = str_replace('gdsunique|', '', $value);
+        $value = str_replace('|required', '', $value);
+        $value = str_replace('required|', '', $value);
+        $value = str_replace('|confirmed', '', $value);
+        $value = str_replace('confirmed|', '', $value);
+      }
 
       $this->blueprint[$key] = $value;
     }

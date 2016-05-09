@@ -16,7 +16,7 @@ class Farm extends GDSModel
       'subdomain' => 'required|alpha|max:25|gdsunique:Farm',
       'mission' => "required|max:200|regex:/^((\w)*(\s)?(\.)?(,)?(;)?(')?(\()?(\))?)+$/",
       'country' => 'required|alpha|max:20',
-      'state' => 'required|alpha|max:20',
+      'state' => 'required|max:25|regex:/^((\w)*(\s)*)+$/',
       'city' => 'required|max:85|regex:/^((\w)*(\s)*)+$/',
       'streetnumber' => 'required|numeric|max:100000',
       'street' => 'required|max:35|regex:/^((\w)*(\s)*)+$/',

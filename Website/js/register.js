@@ -3,35 +3,24 @@ function register()
   var data = $('#register').serialize();
   $cache.password = data.password;
 
-  $.ajax({
-    url: $api.concat('/user'),
-    method: 'POST',
-    data: data
-  })
-  .done(function(response) {
+  var response = helper.sendRequest(data, '/user', 'POST');
 
-    if(response !== undefined && response !== null)
+  response.success(function(data)
+  {
+    $user = helper.parseJson(data);
+    $user.password = $cache.password;
+
+    if($user.type === 'Farmer')
     {
-      $user = JSON.parse(response);
-      $user.password = $cache.password;
-
-      if($user.type === 'Farmer')
-      {
-        window.location.href = '/#/registerfarm';
-      }
-      else
-      {
-        window.location.href = '/#/login';
-      }
+      window.location.href = '/#/registerfarm';
     }
     else
     {
-      helper.showErrors(helper.down);
+      window.location.href = '/#/login';
     }
   })
-  .fail(function(jqXHR, textStatus) {
-    helper.showErrors(jqXHR.responseText);
+  .fail(function(jqXHR, textStatus)
+  {
+    helper.showRequestErrors(jqXHR.responseText);
   });
 }
-
-//$('legend').addClass('animated slideInLeft');

@@ -103,6 +103,9 @@ return [
         'city' => [
             'regex' => 'The city can contain letters and spaces.',
         ],
+        'state' => [
+            'regex' => 'The state can contain letters and spaces.',
+        ],
         'country' => [
             'regex' => 'The country can contain letters and spaces.',
         ],

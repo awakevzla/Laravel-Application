@@ -39,7 +39,7 @@ angular.module('app', [
         "css/animate.css",
       ],
       scripts: [
-        "js/registerfarm.js"
+       "js/registerfarm.js"
       ],
       controller: function($scope, $state) {
         if($user.type !== 'Farmer'){
